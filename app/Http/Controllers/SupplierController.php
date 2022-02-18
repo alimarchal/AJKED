@@ -10,10 +10,20 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class SupplierController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('permission:create')->only('create');
+        $this->middleware('permission:show')->only('index');
+        $this->middleware('permission:edit')->only('edit');
+        $this->middleware('permission:delete')->only('destroy');
+    }
+
     public function index()
     {
         $suppliers = QueryBuilder::for(Supplier::class)
-            ->allowedFilters(['type', 'category', 'description', 'status',AllowedFilter::exact('id')])
+            ->allowedFilters(['type', 'category', 'description', 'status', AllowedFilter::exact('id')])
             ->get();
         return view('suppliers.index', compact('suppliers'));
     }
@@ -81,7 +91,7 @@ class SupplierController extends Controller
         $request->merge(['type' => $type]);
         $supplier->update($request->all());
         session()->flash('success', 'Supplier successfully updated.');
-        return redirect()->route('supplier.edit',[$supplier->id]);
+        return redirect()->route('supplier.edit', [$supplier->id]);
     }
 
     /**

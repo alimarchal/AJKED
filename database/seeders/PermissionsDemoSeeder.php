@@ -27,24 +27,28 @@ class PermissionsDemoSeeder extends Seeder
         Permission::create(['name' => 'delete']);
 
         // create roles and assign existing permissions
-        $role1 = Role::create(['name' => 'writer']);
+/*        $role1 = Role::create(['name' => 'writer']);
         $role1->givePermissionTo('create');
-        $role1->givePermissionTo('show');
+        $role1->givePermissionTo('show');*/
 
         $role2 = Role::create(['name' => 'admin']);
-        $role2->givePermissionTo('edit');
-        $role2->givePermissionTo('delete');
+        $role2->givePermissionTo('create');
+        $role2->givePermissionTo('show');
 
         $role3 = Role::create(['name' => 'Super-Admin']);
         // gets all permissions via Gate::before rule; see AuthServiceProvider
+        $role3->givePermissionTo('create');
+        $role3->givePermissionTo('show');
+        $role3->givePermissionTo('edit');
+        $role3->givePermissionTo('delete');
 
-        // create demo users
+/*        // create demo users
         $user = \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => Hash::make('123456'),
         ]);
-        $user->assignRole($role1);
+        $user->assignRole($role1);*/
 
         $user = \App\Models\User::factory()->create([
             'name' => 'Admin User',

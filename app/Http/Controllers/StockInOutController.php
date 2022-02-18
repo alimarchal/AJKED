@@ -100,27 +100,66 @@ class StockInOutController extends Controller
 
     public function stockOutRegister(Request $request)
     {
-        if ($request->has('month')) {
 
 
-            $date_from = Carbon::parse($request->month)->firstOfMonth()->format('Y-m-d');
-            $date_to = Carbon::parse($request->month)->lastOfMonth()->format('Y-m-d');
+        if ($request->input('date_range') || $request->input('division_id')) {
 
-            $stock_in_out = DB::table('stock_in_outs')
-                ->select(DB::raw('product_id, division_id, SUM(quantity) AS quantity, previous_quantity, indent_no, indent_date, type, divisions.name'))
-                ->leftJoin('divisions', 'stock_in_outs.division_id', '=', 'divisions.id')
-                ->where('type', '=', 'Out')
-                ->whereBetween('indent_date', [$date_from, $date_to])
-                ->groupBy(['indent_no', 'stock_in_outs.product_id'])
-                ->orderBy('indent_no')
-                ->get();
+            $datetime1 = null;
+            $datetime2 = null;
+
+            if (isset($request->date_range) && !empty($request->date_range)) {
+                $dates = explode(' – ', $request->date_range);
+                $fdate = @$dates[0];
+                $tdate = @$dates[1];
+                if (!empty($fdate) && !empty($tdate)) {
+                    $datetime1 = new \DateTime($fdate);
+                    $datetime2 = new \DateTime($tdate);
+                }
+            }
+
+            $date_from = null;
+            $date_to = null;
+
+            if (!empty($request->input('date_range'))) {
+                $date_from = $datetime1->format('Y-m-d');
+                $date_to = $datetime2->format('Y-m-d');
+            } else {
+                $date_from = Carbon::parse($request->month)->firstOfMonth()->format('Y-m-d');
+                $date_to = Carbon::parse($request->month)->lastOfMonth()->format('Y-m-d');
+            }
+
+
+            if (!empty($request->input('division_id')))
+            {
+                $stock_in_out = DB::table('stock_in_outs')
+                    ->select(DB::raw('product_id, division_id, SUM(quantity) AS quantity, previous_quantity, indent_no, indent_date, type, divisions.name'))
+                    ->leftJoin('divisions', 'stock_in_outs.division_id', '=', 'divisions.id')
+                    ->where('type', '=', 'Out')
+                    ->where('division_id', $request->division_id)
+                    ->whereBetween('indent_date', [$date_from, $date_to])
+                    ->groupBy(['indent_no', 'stock_in_outs.product_id'])
+                    ->orderBy('indent_no')
+                    ->get();
+            }
+
+            else
+
+            {
+                $stock_in_out = DB::table('stock_in_outs')
+                    ->select(DB::raw('product_id, division_id, SUM(quantity) AS quantity, previous_quantity, indent_no, indent_date, type, divisions.name'))
+                    ->leftJoin('divisions', 'stock_in_outs.division_id', '=', 'divisions.id')
+                    ->where('type', '=', 'Out')
+                    ->whereBetween('indent_date', [$date_from, $date_to])
+                    ->groupBy(['indent_no', 'stock_in_outs.product_id'])
+                    ->orderBy('indent_no')
+                    ->get();
+            }
+
+
+
+
 
             $data = [];
-
-//        foreach ($stock_in_out as $si)
-//        {
-//            $data[$si->indent_date][$si->product_id] = $si;
-//        }
 
             foreach ($stock_in_out as $si) {
                 $data[$si->indent_no][$si->indent_date][$si->name][] = $si;
@@ -130,6 +169,7 @@ class StockInOutController extends Controller
         } else {
             $date_from = Carbon::parse(date('Y-m-d'))->firstOfMonth()->format('Y-m-d');
             $date_to = Carbon::parse(date('Y-m-d'))->lastOfMonth()->format('Y-m-d');
+
 
             $stock_in_out = DB::table('stock_in_outs')
                 ->select(DB::raw('product_id, division_id, SUM(quantity) AS quantity, previous_quantity, indent_no, indent_date, type, divisions.name'))
@@ -143,17 +183,10 @@ class StockInOutController extends Controller
 
             $data = [];
 
-//        foreach ($stock_in_out as $si)
-//        {
-//            $data[$si->indent_date][$si->product_id] = $si;
-//        }
 
             foreach ($stock_in_out as $si) {
                 $data[$si->indent_no][$si->indent_date][$si->name][] = $si;
             }
-
-
-//        dd($data);
 
             return view('product.stockInRegister', compact('data', 'stock_in_out', 'date_from'));
         }
@@ -179,17 +212,10 @@ class StockInOutController extends Controller
 
             $data = [];
 
-//        foreach ($stock_in_out as $si)
-//        {
-//            $data[$si->indent_date][$si->product_id] = $si;
-//        }
-
             foreach ($stock_in_out as $si) {
                 $data[$si->po_no][$si->po_date][$si->description][] = $si;
             }
 
-
-//        dd($data);
             return view('product.stockOutRegister', compact('data', 'stock_in_out', 'date_from'));
         } else {
             $date_from = Carbon::parse(date('Y-m-d'))->firstOfMonth()->format('Y-m-d');
@@ -205,17 +231,10 @@ class StockInOutController extends Controller
 
             $data = [];
 
-//        foreach ($stock_in_out as $si)
-//        {
-//            $data[$si->indent_date][$si->product_id] = $si;
-//        }
-
             foreach ($stock_in_out as $si) {
                 $data[$si->po_no][$si->po_date][$si->description][] = $si;
             }
 
-
-//        dd($data);
             return view('product.stockOutRegister', compact('data', 'stock_in_out', 'date_from'));
         }
 

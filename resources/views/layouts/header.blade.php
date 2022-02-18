@@ -20,8 +20,12 @@
     <!-- Custom styles for this template-->
     <link href="{{url('admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
     <!-- Chart Js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>--}}
+{{--    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>--}}
+
+    <style>
+        .highcharts-credits { visibility: hidden!important;}
+    </style>
 
 
 </head>

@@ -15,7 +15,9 @@
                 <th>Type</th>
                 <th>Category</th>
                 <th>Description</th>
-                <th>Action</th>
+                @canany(['edit','delete'])
+                    <th>Action</th>
+                @endcanany
             </tr>
             </thead>
             <tbody>
@@ -25,10 +27,14 @@
                     <td>{{$supplier->type}}</td>
                     <td>{{$supplier->category}}</td>
                     <td>{{$supplier->description}}</td>
-                    <td>
-                        <a href="{{route('supplier.edit',$supplier->id)}}" class="btn btn-outline-primary btn-sm" title="Edit Supplier">
-                            <i class="fa fa-edit"></i>
-                        </a>
+                    @canany(['edit','delete'])
+                        <td>
+                            <a href="{{route('supplier.edit',$supplier->id)}}" class="btn btn-outline-primary btn-sm" title="Edit Supplier">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    @endcanany
+
                 </tr>
             @endforeach
 

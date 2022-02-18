@@ -13,6 +13,9 @@
             <tr>
                 <th class="text-center">No</th>
                 <th>Name</th>
+                @canany(['edit','delete'])
+                    Action
+                @endcanany
             </tr>
             </thead>
             <tbody>
@@ -20,10 +23,13 @@
                 <tr>
                     <td class="text-center">{{$loop->iteration}}</td>
                     <td>{{$div->name}}</td>
-                    <td>
-                        <a href="{{route('division.edit',$div->id)}}" class="btn btn-outline-primary btn-sm" title="Edit Division">
-                            <i class="fa fa-edit"></i>
-                        </a>
+                    @canany(['edit','delete'])
+                        <td>
+                            <a href="{{route('division.edit',$div->id)}}" class="btn btn-outline-primary btn-sm" title="Edit Division">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    @endcanany
                 </tr>
             @endforeach
 

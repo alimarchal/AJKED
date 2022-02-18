@@ -15,7 +15,9 @@
                 <th>Category</th>
                 <th>Name</th>
                 <th>Unit</th>
-                <th>Action</th>
+                @canany(['edit','delete'])
+                    <th>Action</th>
+                @endcanany
             </tr>
             </thead>
             <tbody>
@@ -25,10 +27,13 @@
                     <td>{{$si->category}}</td>
                     <td>{{$si->name}}</td>
                     <td>{{$si->unit}}</td>
-                    <td>
-                        <a href="{{route('storeItem.edit',$si->id)}}" class="btn btn-outline-primary btn-sm" title="Edit Supplier">
-                            <i class="fa fa-edit"></i>
-                        </a>
+                    @canany(['edit','delete'])
+                        <td>
+                            <a href="{{route('storeItem.edit',$si->id)}}" class="btn btn-outline-primary btn-sm" title="Edit Supplier">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    @endcanany
                 </tr>
             @endforeach
 

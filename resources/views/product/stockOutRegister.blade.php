@@ -40,7 +40,7 @@
     <!-- Page Heading -->
 
 
-    <form action="{{route('product.stockOutRegister')}}" method="get" class="d-print-none">
+    <form action="{{route('product.stockInRegister')}}" method="get" class="d-print-none">
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="month">Please Select Month</label>

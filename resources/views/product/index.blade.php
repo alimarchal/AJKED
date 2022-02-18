@@ -61,7 +61,9 @@
                             <th>Name</th>
                             <th>Unit</th>
                             <th>Quantity</th>
+
                             <th class="text-center">Action</th>
+
                         </tr>
                         </thead>
 

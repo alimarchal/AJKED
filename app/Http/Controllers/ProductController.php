@@ -10,6 +10,13 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:create')->only('create');
+        $this->middleware('permission:show')->only('index');
+        $this->middleware('permission:edit')->only('edit');
+        $this->middleware('permission:delete')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
