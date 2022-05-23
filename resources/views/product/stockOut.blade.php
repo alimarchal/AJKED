@@ -52,7 +52,7 @@
 
             <div class="form-group col-md-6">
                 <label for="quantity">Quantity</label>
-                <input type="number" min="1" max="100000000" required step="0.01" name="quantity[]" id="quantity" class="form-control">
+                <input type="number" min="0.01" max="100000000" required step="0.01" name="quantity[]" id="quantity" class="form-control">
             </div>
         </div>
 
@@ -95,7 +95,7 @@
 
             <div class="form-group col-md-6">
                 <label for="quantity">Quantity</label>
-                <input type="number" min="1" max="100000000" required step="0.01" name="quantity[]" id="quantity" class="form-control">
+                <input type="number" min="0.01" max="100000000" required step="0.01" name="quantity[]" id="quantity" class="form-control">
             </div>
         </div>
     </div>

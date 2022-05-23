@@ -235,6 +235,7 @@ class StockInOutController extends Controller
                 $data[$si->po_no][$si->po_date][$si->description][] = $si;
             }
 
+//            dd($data);
             return view('product.stockOutRegister', compact('data', 'stock_in_out', 'date_from'));
         }
 
