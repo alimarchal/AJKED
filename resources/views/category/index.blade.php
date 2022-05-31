@@ -5,7 +5,7 @@
 
 @section('content')
     <!-- Page Heading -->
-    <h4 class="h4 mb-4 text-gray-800">Categories</h4>
+    <h4 class="h4 mb-4 text-gray-800">All Categories</h4>
 
     @if($category->isNotEmpty())
         <table class="table table-striped table-bordered">
@@ -13,6 +13,8 @@
             <tr>
                 <th class="text-center">No</th>
                 <th>Name</th>
+                <th>Status</th>
+                <th>Last Updated</th>
                 @canany(['edit','delete'])
                     <th>Actions</th>
                 @endcanany
@@ -21,8 +23,16 @@
             <tbody>
             @foreach($category as $cat)
                 <tr>
-                    <td class="text-center">{{$loop->iteration}}</td>
+                    <td class="text-center">{{$cat->id}}</td>
                     <td>{{$cat->name}}</td>
+                    <td>
+                        @if($cat->status)
+                            Active
+                        @else
+                            In-Active
+                        @endif
+                    </td>
+                    <td>{{\Carbon\Carbon::parse($cat->updated_at)->format('d-m-Y')}}</td>
                     @canany(['edit','delete'])
                         <td>
                             <a href="{{route('category.edit',$cat->id)}}" class="btn btn-outline-primary btn-sm" title="Edit Division">
@@ -35,5 +45,6 @@
 
             </tbody>
         </table>
+        {{ $category->links() }}
     @endif
 @endsection

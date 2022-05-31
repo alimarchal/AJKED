@@ -213,7 +213,7 @@ class StockInOutController extends Controller
             $data = [];
 
             foreach ($stock_in_out as $si) {
-                $data[$si->po_no][$si->po_date][$si->description][] = $si;
+                $data[$si->po_no][$si->receiving_po_date][$si->description][] = $si;
             }
 
             return view('product.stockOutRegister', compact('data', 'stock_in_out', 'date_from'));
@@ -221,18 +221,23 @@ class StockInOutController extends Controller
             $date_from = Carbon::parse(date('Y-m-d'))->firstOfMonth()->format('Y-m-d');
             $date_to = Carbon::parse(date('Y-m-d'))->lastOfMonth()->format('Y-m-d');
 
+            DB::enableQueryLog();
             $stock_in_out = DB::table('stock_in_outs')
-                ->select(DB::raw('stock_in_outs.product_id, stock_in_outs.supplier_id, suppliers.description, stock_in_outs.po_no, stock_in_outs.po_date, stock_in_outs.receiving_po_date, stock_in_outs.quantity, stock_in_outs.type'))
+                ->select(DB::raw('stock_in_outs.product_id, stock_in_outs.supplier_id, suppliers.description,
+                stock_in_outs.po_no, stock_in_outs.po_date, stock_in_outs.receiving_po_date, stock_in_outs.quantity, stock_in_outs.type'))
                 ->join('suppliers', 'stock_in_outs.supplier_id', '=', 'suppliers.id')
                 ->where('stock_in_outs.type', '=', 'In')
-                ->whereBetween('stock_in_outs.po_date', [$date_from, $date_to])
+                ->whereBetween('stock_in_outs.receiving_po_date', [$date_from, $date_to])
                 ->groupBy(['stock_in_outs.po_no', 'stock_in_outs.product_id'])
                 ->get();
+//            dd(DB::getQueryLog());
+
+
 
             $data = [];
 
             foreach ($stock_in_out as $si) {
-                $data[$si->po_no][$si->po_date][$si->description][] = $si;
+                $data[$si->po_no][$si->receiving_po_date][$si->description][] = $si;
             }
 
 //            dd($data);

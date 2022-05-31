@@ -15,9 +15,16 @@
         @csrf
         @method('PUT')
         <div class="form-row">
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-6">
                 <label for="type">Name</label>
                 <input type="text" name="name" class="form-control" id="name" value="{{$category->name}}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="status">Status</label>
+                <select name="status" id="status" class="form-control">
+                    <option value="1" @if($category->status == 1) selected @endif>Active</option>
+                    <option value="0" @if($category->status == 0) selected @endif>In-Active</option>
+                </select>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>

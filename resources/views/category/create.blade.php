@@ -9,15 +9,25 @@
 
 @section('content')
     <!-- Page Heading -->
-    <h4 class="h4 mb-4 text-gray-800">Create Category</h4>
+    <h4 class="h4 mb-4 text-gray-800">Create New Category</h4>
 
     <form method="post" action="{{route('category.store')}}">
         @csrf
         <div class="form-row">
-            <div class="form-group col-md-12">
-                <label for="type">Name</label>
+            <div class="form-group col-md-6">
+                <label for="type">Category Code</label>
                 <input type="text" name="name" class="form-control" id="name">
             </div>
+
+
+            <div class="form-group col-md-6">
+                <label for="status">Status</label>
+                <select name="status" id="status" class="form-control">
+                    <option value="1">Active</option>
+                    <option value="0">In-Active</option>
+                </select>
+            </div>
+
         </div>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>

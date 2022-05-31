@@ -14,14 +14,10 @@
     <form method="post" action="{{route('product.store')}}">
         @csrf
         <div class="form-row">
+
             <div class="form-group col-md-3">
-                <label for="category_id">Category</label>
-                <select class="form-control select2" id="category_id" name="category_id" required>
-                    <option value="" selected>None</option>
-                    @foreach(\App\Models\Category::all() as $item)
-                        <option value="{{$item->id}}">{{ $item->name }}</option>
-                    @endforeach
-                </select>
+                <label for="name">Name of item</label>
+                <input type="text" name="name" id="name" class="form-control">
             </div>
 
             <div class="form-group col-md-3">
@@ -34,15 +30,24 @@
                 </select>
             </div>
 
-            <div class="form-group col-md-4">
-                <label for="name">Name:</label>
-                <input type="text" name="name" id="name" class="form-control">
+
+            <div class="form-group col-md-3">
+                <label for="category_id">Category Code</label>
+                <select class="form-control select2" id="category_id" name="category_id" required>
+                    <option value="" selected>None</option>
+                    @foreach(\App\Models\Category::all() as $item)
+                        <option value="{{$item->id}}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
             </div>
 
 
-            <div class="form-group col-md-2">
-                <label for="quantity">Quantity:</label>
-                <input type="number" min="0" max="100000000" step="0.01" name="quantity" id="quantity" class="form-control">
+            <div class="form-group col-md-3">
+                <label for="status">Status</label>
+                <select name="status" id="status" class="form-control select2">
+                    <option value="1">Active</option>
+                    <option value="0">In-Active</option>
+                </select>
             </div>
         </div>
 

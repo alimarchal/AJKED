@@ -9,33 +9,55 @@
 
 @section('content')
     <!-- Page Heading -->
-    <h4 class="h4 mb-4 text-gray-800">Create Store Item</h4>
+    <h4 class="h4 mb-4 text-gray-800">Update Store Item</h4>
 
-    <form method="post" action="{{route('storeItem.update',$storeItem->id)}}">
+
+    <form method="post" action="{{route('product.update',$product->id)}}">
         @csrf
         @method('PUT')
         <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="category">Category</label>
-                <select class="form-control select2" id="category" name="category" required>
-                    <option value="">None</option>
-                    @foreach(\App\Models\StoreItem::store_item_categories() as $item)
-                        <option value="{{$item}}" @if($storeItem->category == $item) selected @endif>{{$item}}</option>
-                    @endforeach
-                </select>
+
+            <div class="form-group col-md-3">
+                <label for="name">Name of item</label>
+                <input type="text" name="name" id="name" value="{{$product->name}}" class="form-control">
             </div>
-            <div class="form-group col-md-6">
+
+            <div class="form-group col-md-3">
                 <label for="unit">Unit</label>
                 <select class="form-control select2" id="unit" name="unit" required>
-                    @foreach(\App\Models\StoreItem::item_unit() as $item)
-                        <option value="{{$item}}" @if($storeItem->unit == $item) selected @endif>{{$item}}</option>
+                    @php $flag = false; $unt = $product->unit; @endphp
+                    @foreach(\App\Models\Product::item_unit() as $item)
+                        <option value="{{$item}}"
+
+                        @if($item == $product->unit)
+                            selected
+                        @endif
+
+                        >{{$item}}</option>
                     @endforeach
                 </select>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" name="name" id="name" class="form-control" value="{{$storeItem->name}}">
+
+
+            <div class="form-group col-md-3">
+                <label for="category_id">Category Code</label>
+                <select class="form-control select2" id="category_id" name="category_id" required>
+
+                    @foreach(\App\Models\Category::all() as $item)
+
+                        <option value="{{$item->id}}" @if($product->category_id == $item->id) selected @endif   >{{ $item->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+
+            <div class="form-group col-md-3">
+                <label for="status">Status</label>
+                <select name="status" id="status" class="form-control select2">
+                    <option value="1"  @if($product->status == 1) selected @endif  >Active</option>
+                    <option value="0"   @if($product->status == 0) selected @endif  >In-Active</option>
+                </select>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>

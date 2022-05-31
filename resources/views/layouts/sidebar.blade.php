@@ -34,13 +34,13 @@
         <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseFour"
            aria-expanded="true" aria-controls="collapseFour">
             <i class="fas fa-fw fa-warehouse"></i>
-            <span>Store Items</span>
+            <span>Hardware Item List</span>
         </a>
         <div id="collapseFour" class="collapse  @if(request()->routeIs('product.*')) show @endif" aria-labelledby="headingFour" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 {{--                <h6 class="collapse-header">Custom Components:</h6>--}}
                 <a class="collapse-item @if(request()->routeIs('product.create')) active @endif" href="{{route('product.create')}}">Create Store Items</a>
-                <a class="collapse-item @if(request()->routeIs('product.index')) active @endif" href="{{route('product.index')}}">Show All / Stock In</a>
+                <a class="collapse-item @if(request()->routeIs('product.index')) active @endif" href="{{route('product.index')}}">Show All</a>
                 <a class="collapse-item @if(request()->routeIs('product.stockOut')) active @endif" href="{{route('product.stockOut')}}">Stock Out</a>
                         <h6 class="collapse-header">Stock In/Out Status:</h6>
                 <a class="collapse-item @if(request()->routeIs('product.stockInRegister')) active @endif" href="{{route('product.stockInRegister')}}">Stock In Details</a>
@@ -96,20 +96,7 @@
         </div>
     </li>
 
-    <li class="nav-item @if(request()->routeIs('category.*')) active @endif">
-        <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseFive"
-           aria-expanded="true" aria-controls="collapseFive">
-            <i class="fas fa-fw fa-list-alt"></i>
-            <span>Category</span>
-        </a>
-        <div id="collapseFive" class="collapse  @if(request()->routeIs('category.*')) show @endif" aria-labelledby="headingFive" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                {{--                <h6 class="collapse-header">Custom Components:</h6>--}}
-                <a class="collapse-item @if(request()->routeIs('category.create')) active @endif" href="{{route('category.create')}}">Create Category</a>
-                <a class="collapse-item @if(request()->routeIs('category.index')) active @endif" href="{{route('category.index')}}">Show All</a>
-            </div>
-        </div>
-    </li>
+
 
 {{--    <li class="nav-item @if(request()->routeIs('stockInOut.*')) active @endif">--}}
 {{--        <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseSix"--}}
@@ -129,6 +116,27 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
+    <div class="sidebar-heading">
+        Settings
+    </div>
+
+    <li class="nav-item @if(request()->routeIs('category.*')) active @endif">
+        <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseFive"
+           aria-expanded="true" aria-controls="collapseFive">
+            <i class="fas fa-fw fa-list-alt"></i>
+            <span>Category</span>
+        </a>
+        <div id="collapseFive" class="collapse  @if(request()->routeIs('category.*')) show @endif" aria-labelledby="headingFive" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                {{--                <h6 class="collapse-header">Custom Components:</h6>--}}
+                <a class="collapse-item @if(request()->routeIs('category.create')) active @endif" href="{{route('category.create')}}">Create Category</a>
+                <a class="collapse-item @if(request()->routeIs('category.index')) active @endif" href="{{route('category.index')}}">Show All</a>
+            </div>
+        </div>
+    </li>
+
+
+
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
