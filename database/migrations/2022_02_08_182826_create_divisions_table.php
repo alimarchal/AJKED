@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('short_name')->nullable();
+            $table->string('receiving_person_name')->nullable();
+            $table->string('designation')->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

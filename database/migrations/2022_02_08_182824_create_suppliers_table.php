@@ -15,10 +15,16 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->string('type')->nullable();
-            $table->string('category')->nullable();
-            $table->text('description')->nullable();
-            $table->enum('status',['Active','NonActive'])->default('Active');
+            $table->string('name_of_supplier_firm')->nullable();
+            $table->string('ajked_registration_no')->unique();
+            //$table->text('product_id')->nullable();
+            //$table->string('category')->nullable();
+            $table->enum('status',['Active','NonActive','Blacklisted'])->default('Active');
+
+//
+//            $table->string('type')->nullable();
+//            $table->string('category')->nullable();
+//            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

@@ -30,24 +30,7 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
 
-    <li class="nav-item @if(request()->routeIs('product.*')) active @endif">
-        <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseFour"
-           aria-expanded="true" aria-controls="collapseFour">
-            <i class="fas fa-fw fa-warehouse"></i>
-            <span>Hardware Item List</span>
-        </a>
-        <div id="collapseFour" class="collapse  @if(request()->routeIs('product.*')) show @endif" aria-labelledby="headingFour" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                {{--                <h6 class="collapse-header">Custom Components:</h6>--}}
-                <a class="collapse-item @if(request()->routeIs('product.create')) active @endif" href="{{route('product.create')}}">Create Store Items</a>
-                <a class="collapse-item @if(request()->routeIs('product.index')) active @endif" href="{{route('product.index')}}">Show All</a>
-                <a class="collapse-item @if(request()->routeIs('product.stockOut')) active @endif" href="{{route('product.stockOut')}}">Stock Out</a>
-                        <h6 class="collapse-header">Stock In/Out Status:</h6>
-                <a class="collapse-item @if(request()->routeIs('product.stockInRegister')) active @endif" href="{{route('product.stockInRegister')}}">Stock In Details</a>
-                <a class="collapse-item @if(request()->routeIs('product.stockOutRegister')) active @endif" href="{{route('product.stockOutRegister')}}">Stock Out Details</a>
-            </div>
-        </div>
-    </li>
+
 
 
     <li class="nav-item @if(request()->routeIs('report.*')) active @endif">
@@ -65,36 +48,42 @@
     </li>
 
 
-    <li class="nav-item @if(request()->routeIs('supplier.*')) active @endif">
-        <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseTwo"
-           aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Suppliers</span>
-        </a>
-        <div id="collapseTwo" class="collapse  @if(request()->routeIs('supplier.*')) show @endif" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-{{--                <h6 class="collapse-header">Custom Components:</h6>--}}
-                <a class="collapse-item @if(request()->routeIs('supplier.create')) active @endif" href="{{route('supplier.create')}}">Create Supplier</a>
-                <a class="collapse-item @if(request()->routeIs('supplier.index')) active @endif" href="{{route('supplier.index')}}">Show All</a>
-            </div>
-        </div>
-    </li>
 
 
-    <li class="nav-item @if(request()->routeIs('division.*')) active @endif">
-        <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseThree"
-           aria-expanded="true" aria-controls="collapseThree">
-            <i class="fas fa-fw fa-building"></i>
-            <span>Divisions</span>
+    <li class="nav-item @if(request()->routeIs('purchaseOrder.*')) active @endif">
+        <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseTen"
+           aria-expanded="true" aria-controls="collapseTen">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Purchase Order</span>
         </a>
-        <div id="collapseThree" class="collapse  @if(request()->routeIs('division.*')) show @endif" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+        <div id="collapseTen" class="collapse  @if(request()->routeIs('purchaseOrder.*')) show @endif" aria-labelledby="headingTen" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 {{--                <h6 class="collapse-header">Custom Components:</h6>--}}
-                <a class="collapse-item @if(request()->routeIs('division.create')) active @endif" href="{{route('division.create')}}">Create Division</a>
-                <a class="collapse-item @if(request()->routeIs('division.index')) active @endif" href="{{route('division.index')}}">Show All</a>
+                <a class="collapse-item @if(request()->routeIs('purchaseOrder.create')) active @endif" href="{{route('purchaseOrder.create')}}">Create</a>
+                <a class="collapse-item @if(request()->routeIs('purchaseOrder.index')) active @endif" href="{{route('purchaseOrder.index')}}">Show All</a>
             </div>
         </div>
     </li>
+
+
+
+    <li class="nav-item @if(request()->routeIs('scheme.*')) active @endif">
+        <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseNine"
+           aria-expanded="true" aria-controls="collapseNine">
+            <i class="fas fa-fw fa-reply"></i>
+            <span>Scheme</span>
+        </a>
+        <div id="collapseNine" class="collapse  @if(request()->routeIs('scheme.*')) show @endif" aria-labelledby="headingNine" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                {{--                <h6 class="collapse-header">Custom Components:</h6>--}}
+                <a class="collapse-item @if(request()->routeIs('scheme.create')) active @endif" href="{{route('scheme.create')}}">Create</a>
+                <a class="collapse-item @if(request()->routeIs('scheme.index')) active @endif" href="{{route('scheme.index')}}">Show All</a>
+            </div>
+        </div>
+    </li>
+
+
+
 
 
 
@@ -124,13 +113,65 @@
         <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseFive"
            aria-expanded="true" aria-controls="collapseFive">
             <i class="fas fa-fw fa-list-alt"></i>
-            <span>Category</span>
+            <span>Category List</span>
         </a>
         <div id="collapseFive" class="collapse  @if(request()->routeIs('category.*')) show @endif" aria-labelledby="headingFive" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 {{--                <h6 class="collapse-header">Custom Components:</h6>--}}
                 <a class="collapse-item @if(request()->routeIs('category.create')) active @endif" href="{{route('category.create')}}">Create Category</a>
                 <a class="collapse-item @if(request()->routeIs('category.index')) active @endif" href="{{route('category.index')}}">Show All</a>
+            </div>
+        </div>
+    </li>
+
+
+    <li class="nav-item @if(request()->routeIs('product.*')) active @endif">
+        <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseFour"
+           aria-expanded="true" aria-controls="collapseFour">
+            <i class="fas fa-fw fa-warehouse"></i>
+            <span>Hardware Item List</span>
+        </a>
+        <div id="collapseFour" class="collapse  @if(request()->routeIs('product.*')) show @endif" aria-labelledby="headingFour" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                {{--                <h6 class="collapse-header">Custom Components:</h6>--}}
+                <a class="collapse-item @if(request()->routeIs('product.create')) active @endif" href="{{route('product.create')}}">Create Store Items</a>
+                <a class="collapse-item @if(request()->routeIs('product.index')) active @endif" href="{{route('product.index')}}">Show All</a>
+                <a class="collapse-item @if(request()->routeIs('product.stockOut')) active @endif" href="{{route('product.stockOut')}}">Stock Out</a>
+                <h6 class="collapse-header">Stock In/Out Status:</h6>
+                <a class="collapse-item @if(request()->routeIs('product.stockInRegister')) active @endif" href="{{route('product.stockInRegister')}}">Stock In Details</a>
+                <a class="collapse-item @if(request()->routeIs('product.stockOutRegister')) active @endif" href="{{route('product.stockOutRegister')}}">Stock Out Details</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item @if(request()->routeIs('supplier.*')) active @endif">
+        <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseTwo"
+           aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Suppliers List</span>
+        </a>
+        <div id="collapseTwo" class="collapse  @if(request()->routeIs('supplier.*')) show @endif" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                {{--                <h6 class="collapse-header">Custom Components:</h6>--}}
+                <a class="collapse-item @if(request()->routeIs('supplier.create')) active @endif" href="{{route('supplier.create')}}">Create Firm/Suppliers</a>
+                <a class="collapse-item @if(request()->routeIs('supplier.index')) active @endif" href="{{route('supplier.index')}}">Show All</a>
+            </div>
+        </div>
+    </li>
+
+
+
+    <li class="nav-item @if(request()->routeIs('division.*')) active @endif">
+        <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseThree"
+           aria-expanded="true" aria-controls="collapseThree">
+            <i class="fas fa-fw fa-building"></i>
+            <span>Consignee List</span>
+        </a>
+        <div id="collapseThree" class="collapse  @if(request()->routeIs('division.*')) show @endif" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                {{--                <h6 class="collapse-header">Custom Components:</h6>--}}
+                <a class="collapse-item @if(request()->routeIs('division.create')) active @endif" href="{{route('division.create')}}">Create Consignee list</a>
+                <a class="collapse-item @if(request()->routeIs('division.index')) active @endif" href="{{route('division.index')}}">Show All</a>
             </div>
         </div>
     </li>

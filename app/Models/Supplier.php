@@ -9,7 +9,12 @@ class Supplier extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['type', 'category', 'description', 'status'];
+    protected $fillable = ['name_of_supplier_firm', 'ajked_registration_no', 'type', 'category', 'description', 'status'];
+
+    public function supplier_items(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SupplierItem::class);
+    }
 
     public static function supplier_list()
     {

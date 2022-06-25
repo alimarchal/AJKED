@@ -24,9 +24,8 @@ class StoreSupplierRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => "required",
-            'category' => "required",
-            'description' => "required",
+            'name_of_supplier_firm' => "required",
+            'ajked_registration_no' => "required",
             'status' => "required",
         ];
     }

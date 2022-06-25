@@ -9,7 +9,13 @@ class Division extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name',
+        'short_name',
+        'receiving_person_name',
+        'designation',
+        'status',
+    ];
 
     public static function division_list(): array
     {

@@ -72,9 +72,9 @@
                         <th>Created At</th>
                         <th>Updated At</th>
                         {{--                            <th>Quantity</th>--}}
-
+                        @canany(['edit','delete'])
                         <th class="text-center d-print-none">Action</th>
-
+                        @endcan
                     </tr>
                     </thead>
 

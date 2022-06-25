@@ -25,10 +25,17 @@ return new class extends Migration
             $table->foreign('supplier_id')->references('id')->on('suppliers');
 
             $table->decimal('quantity', 14, 2)->default(0.00);
-            $table->decimal('previous_quantity', 14, 2)->default(0.00);
+            $table->decimal('balance', 14, 2)->default(0.00);
 
-            $table->string('po_no')->nullable();
-            $table->date('po_date')->nullable();
+            // poid
+            $table->unsignedBigInteger('purchase_order_id')->nullable();
+            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders');
+
+
+// remove these two
+//            $table->string('po_no')->nullable();
+//            $table->date('po_date')->nullable();
+
             $table->date('receiving_po_date')->nullable();
 
 

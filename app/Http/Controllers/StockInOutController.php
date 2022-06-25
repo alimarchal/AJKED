@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreStockInOutRequest;
 use App\Http\Requests\UpdateStockInOutRequest;
 use App\Models\Product;
+use App\Models\PurchaseOrder;
+use App\Models\PurchaseOrderItem;
 use App\Models\StockInOut;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use function PHPUnit\Framework\throwException;
 
 class StockInOutController extends Controller
 {
@@ -26,6 +29,70 @@ class StockInOutController extends Controller
             ->orderByDesc('created_at')
             ->paginate(10)->withQueryString();
         return view('stockInOut.index', compact('stockInOut'));
+    }
+
+
+    public function stockIn(Request $request)
+    {
+        return view('stockInOut.stockIn');
+    }
+
+
+    public function stockInStore(Request $request)
+    {
+        $product_quantity = array_combine($request->store_item, $request->quantity);
+        $flag = false;
+        try {
+
+            DB::beginTransaction();
+
+            foreach ($product_quantity as $key => $value) {
+
+                // Find purchase order number and their product
+                 $purchase_order_items = PurchaseOrder::find($request->purchase_order_id)->purchase_order_items;
+
+                if (!empty($purchase_order_items->where('product_id',$key)->first()))
+                {
+                    $purchase_order_item = $purchase_order_items->where('product_id',$key)->first();
+
+                    $balance = $purchase_order_item->balance;
+
+                    $purchase_order_item->update([
+                        'balance' => $balance + $value,
+                    ]);
+
+                    $stock_in = StockInOut::create([
+                        'product_id' => $key,
+                        'supplier_id' => $request->supplier_id,
+                        'quantity' => $value,
+                        'purchase_order_id' => $request->purchase_order_id,
+                        'receiving_po_date' => $request->receiving_po_date,
+                    ]);
+
+                    $stock_item = Product::find($key);
+                    $item_quantity = $stock_item->quantity + $value;
+                    $stock_item->update(['quantity' => $item_quantity]);
+                    $stock_in->update(['balance' => $item_quantity]);
+                } else
+                {
+                    $flag = true;
+                    throw new \Exception();
+                }
+
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+
+        if ($flag) {
+            session()->flash('error', 'Error something went wrong!. Your PO Item does not match with your input please check and retry.');
+            return to_route('product.stockIn');
+        } else {
+            session()->flash('success', 'Your stock has been successfully updated...');
+            return to_route('product.stockIn');
+        }
+
     }
 
     /**
@@ -129,8 +196,7 @@ class StockInOutController extends Controller
             }
 
 
-            if (!empty($request->input('division_id')))
-            {
+            if (!empty($request->input('division_id'))) {
                 $stock_in_out = DB::table('stock_in_outs')
                     ->select(DB::raw('product_id, division_id, SUM(quantity) AS quantity, previous_quantity, indent_no, indent_date, type, divisions.name'))
                     ->leftJoin('divisions', 'stock_in_outs.division_id', '=', 'divisions.id')
@@ -140,11 +206,7 @@ class StockInOutController extends Controller
                     ->groupBy(['indent_no', 'stock_in_outs.product_id'])
                     ->orderBy('indent_no')
                     ->get();
-            }
-
-            else
-
-            {
+            } else {
                 $stock_in_out = DB::table('stock_in_outs')
                     ->select(DB::raw('product_id, division_id, SUM(quantity) AS quantity, previous_quantity, indent_no, indent_date, type, divisions.name'))
                     ->leftJoin('divisions', 'stock_in_outs.division_id', '=', 'divisions.id')
@@ -154,9 +216,6 @@ class StockInOutController extends Controller
                     ->orderBy('indent_no')
                     ->get();
             }
-
-
-
 
 
             $data = [];
@@ -231,7 +290,6 @@ class StockInOutController extends Controller
                 ->groupBy(['stock_in_outs.po_no', 'stock_in_outs.product_id'])
                 ->get();
 //            dd(DB::getQueryLog());
-
 
 
             $data = [];

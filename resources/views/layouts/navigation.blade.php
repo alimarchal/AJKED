@@ -172,14 +172,10 @@
                 </a>
                 <div class="dropdown-divider"></div>
 
-                <!-- Authentication -->
-
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                this.closest('form').submit();" data-toggle="modal"
-                       data-target="#logoutModal">
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" data-toggle="modal" data-target="#logoutModal">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         {{ __('Log Out') }}
                     </a>

@@ -49,7 +49,7 @@ class DivisionController extends Controller
     public function store(StoreDivisionRequest $request)
     {
         $division = Division::create($request->all());
-        session()->flash('success', 'Division successfully created.');
+        session()->flash('success', 'Consignee list successfully created.');
         return redirect()->route('division.store');
     }
 
@@ -85,7 +85,7 @@ class DivisionController extends Controller
     public function update(UpdateDivisionRequest $request, Division $division)
     {
         $division->update($request->all());
-        session()->flash('success', 'Division successfully updated.');
+        session()->flash('success', 'Consignee list successfully updated.');
         return redirect()->route('division.edit', [$division->id]);
     }
 

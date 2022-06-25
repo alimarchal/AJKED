@@ -24,7 +24,11 @@ class UpdateDivisionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name',
+            'short_name',
+            'receiving_person_name',
+            'designation',
+            'status',
         ];
     }
 }
