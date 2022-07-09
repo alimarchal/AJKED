@@ -36,7 +36,7 @@
                                         <div class="row no-gutters float-right">
                                             <div class="col-auto ">
                                                 <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                    {{\App\Models\Product::all()->count()}}
+                                                    <a href="{{route('product.index')}}">{{\App\Models\Product::all()->count()}}</a>
                                                 </div>
                                             </div>
 
@@ -71,18 +71,43 @@
                             <tr>
                                 <td>1</td>
                                 <td>Transformers</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
+                                <td>
+
+                                    @if(!empty(\App\Models\StockInOut::where('product_id', 2)->whereBetween('created_at', [\Carbon\Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d 00:00:00'),\Carbon\Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d 23:59:59'),])->latest()->first()))
+                                        {{\App\Models\StockInOut::where('product_id', 2)->whereBetween('created_at', [\Carbon\Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d 00:00:00'),\Carbon\Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d 23:59:59'),])->latest()->first()->quantity}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(!empty(\App\Models\StockInOut::where('product_id',2)->where('type','Credit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->isNotEmpty()))
+                                        {{number_format(\App\Models\StockInOut::where('product_id',2)->where('type','Credit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(!empty(\App\Models\StockInOut::where('product_id',2)->where('type','Debit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->isNotEmpty()))
+                                        {{number_format(\App\Models\StockInOut::where('product_id',2)->where('type','Debit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(!empty(\App\Models\Product::find(2)))
+                                        {{\App\Models\Product::find(2)->quantity}}
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <td>2</td>
                                 <td>HT Sturcture</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
+                                <td>
+                                    {{\App\Models\StockInOut::where('product_id', 2)->whereBetween('created_at', [\Carbon\Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d 00:00:00'),\Carbon\Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d 23:59:59'),])->latest()->first()->quantity}}
+                                </td>
+                                <td>
+                                    {{number_format(\App\Models\StockInOut::where('product_id',2)->where('type','Credit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}
+                                </td>
+                                <td>
+                                    {{number_format(\App\Models\StockInOut::where('product_id',2)->where('type','Debit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}
+                                </td>
+                                <td>
+                                    {{\App\Models\Product::find(2)->quantity}}
+                                </td>
                             </tr>
                             <tr>
                                 <td>3</td>

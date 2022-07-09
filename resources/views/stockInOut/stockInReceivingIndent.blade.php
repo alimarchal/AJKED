@@ -12,89 +12,68 @@
 @section('content')
     <!-- Page Heading -->
     <h4 class="h4 mb-4 text-gray-800">
-        Stock In from Purchase Order
+        Stock In from Consignee List
     </h4>
 
     <form method="post" action="{{route('product.stockInStore')}}" onsubmit="return confirm('Do you really want to submit the form?');" enctype="multipart/form-data">
         @csrf
         <div class="form-row">
 
-
-            <input type="hidden" name="chalan_type" value="PurchaseOrder">
             <div class="form-group col-md-3">
-                <label for="purchase_order_id">POID</label>
-                <select class="form-control select2" id="purchase_order_id" name="purchase_order_id" required>
+                <label for="indent_no">Indent No</label>
+                <input type="text" name="indent_no" class="form-control" id="indent_no" >
+                <input type="hidden" name="chalan_type" value="Indent">
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="indent_date">Indent Date</label>
+                <input type="date" name="indent_date" onkeydown="return false" class="form-control" id="indent_date" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="division_id">Office Name / Sending Office</label>
+                <select class="form-control select2" id="division_id" name="division_id" required>
                     <option value="" >None</option>
-                    @foreach(\App\Models\PurchaseOrder::where('status','Running')->get() as $supplier)
-                        <option value="{{$supplier->id}}">{{$supplier->purchase_order_number . ' - ' . \App\Models\Supplier::find($supplier->name_of_firm_supplier)->name_of_supplier_firm }}</option>
+                    @foreach(\App\Models\Division::all() as $division)
+                        <option value="{{$division->id}}">{{$division->name }}</option>
                     @endforeach
                 </select>
             </div>
 
-
             <div class="form-group col-md-3">
-                <label for="delivery_chalan_receiving_date">Delivery Chalan Receiving Date</label>
-                <input type="date" name="delivery_chalan_receiving_date" onkeydown="return false" class="form-control" id="delivery_chalan_receiving_date" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                <label for="scheme_name">Scheme (Normal/ADP)</label>
+                <select class="form-control select2" id="scheme_name" name="scheme_name">
+                    <option value="None" selected>None</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Deposit">Deposit</option>
+                    <option value="Development">Development (ADP)</option>
+                </select>
             </div>
 
             <div class="form-group col-md-3">
-                <label for="delivery_chalan_number">Delivery Chalan Number</label>
-                <input type="text" name="delivery_chalan_number" onkeydown="return false" class="form-control" id="delivery_chalan_number" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                <label for="approved_by_name">Approved By Name</label>
+                <input type="text" name="approved_by_name" onkeydown="return false" class="form-control" id="approved_by_name">
             </div>
-
 
             <div class="form-group col-md-3">
-                <label for="delivery_chalan_date">Delivery Chalan Date</label>
-                <input type="date" name="delivery_chalan_date" onkeydown="return false" class="form-control" id="delivery_chalan_date" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                <label for="approved_by_designation">Approved By Designation</label>
+                <input type="text" name="approved_by_designation" onkeydown="return false" class="form-control" id="approved_by_designation">
             </div>
-
-
 
             <div class="form-group col-md-3">
-                <label for="inspection_certification_number">Inspection Certification Number</label>
-                <input type="text" name="inspection_certification_number" onkeydown="return false" class="form-control" id="inspection_certification_number" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                <label for="received_by_name">Received by Name</label>
+                <input type="text" name="received_by_name" class="form-control" id="received_by_name">
             </div>
-
 
             <div class="form-group col-md-3">
-                <label for="inspection_certification_date">Inspection Certification Date</label>
-                <input type="date" name="inspection_certification_date" onkeydown="return false" class="form-control" id="inspection_certification_date" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                <label for="received_by_designation">Received by Designation</label>
+                <input type="text" name="received_by_designation" class="form-control" id="received_by_designation" >
             </div>
-
-
-
-
-            <div class="form-group col-md-3">
-                <label for="receiving_person_name">Receiving Person</label>
-                <input type="text" name="receiving_person_name" onkeydown="return false" class="form-control" id="receiving_person_name" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
-            </div>
-
-
-            <div class="form-group col-md-3">
-                <label for="receiving_person_designation">Designation</label>
-                <input type="text" name="receiving_person_designation" onkeydown="return false" class="form-control" id="receiving_person_designation" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
-            </div>
-
-
-            <div class="form-group col-md-3">
-                <label for="from_supplier_person">From (Supplier Person)</label>
-                <input type="text" name="from_supplier_person" onkeydown="return false" class="form-control" id="from_supplier_person" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
-            </div>
-
-
-            <div class="form-group col-md-3">
-                <label for="from_supplier_designation">Designation (Supplier Person)</label>
-                <input type="text" name="from_supplier_designation" onkeydown="return false" class="form-control" id="from_supplier_designation" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
-            </div>
-
-
-
 
             <div class="form-group col-md-3">
                 <label for="attachment_path_1">Attachment</label>
                 <input type="file" name="attachment_path_1" class="form-control" id="attachment_path_1">
             </div>
-
 
         </div>
 

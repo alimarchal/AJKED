@@ -9,9 +9,33 @@ class StockInOut extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['product_id', 'division_id', 'supplier_id', 'type', 'return', 'issued_date',
-        'return_date', 'quantity', 'price', 'description', 'attachment_path', 'po_no', 'po_date', 'receiving_po_date',
-        'previous_quantity', 'indent_no', 'indent_date', 'balance', 'purchase_order_id'
+    protected $fillable = [
+        'product_id',
+        'purchase_order_id',
+        'delivery_chalan_receiving_date',
+        'delivery_chalan_number',
+        'delivery_chalan_date',
+        'inspection_certification_number',
+        'inspection_certification_date',
+        'receiving_person_name',
+        'receiving_person_designation',
+        'from_supplier_person',
+        'from_supplier_designation',
+        'attachment_path',
+        'type',
+        'quantity',
+        'balance',
+        'indent_no',
+        'indent_date',
+        'division_id',
+        'scheme_name',
+        'approved_by_name',
+        'approved_by_designation',
+        'received_by_name',
+        'received_by_designation',
+        'return',
+        'chalan_type',
+        'scheme_id',
     ];
 
     public function product()

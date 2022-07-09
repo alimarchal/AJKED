@@ -82,7 +82,23 @@
 
 
         <div class="myrow">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="" class="text-danger">Store Item</label>
+                    {{--                //product_id[]--}}
+                    <select class="form-control select2" name="store_item[0]" required style="width: 100%;">
+                        <option value="" selected>Please select store item</option>
+                        @foreach(\App\Models\Product::all() as $item)
+                            <option value="{{$item->id}}">ID: {{$item->id}} - {{$item->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
 
+                <div class="form-group col-md-6">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" min="0.01" max="100000000" required step="0.01" name="quantity[]" id="quantity" class="form-control">
+                </div>
+            </div>
         </div>
 
 
@@ -123,7 +139,7 @@
         <script>
             $(document).ready(function () {
                 var traing_count = 0;
-                // $('.select2').select2();
+                $('.select2').select2();
 
 
                 $("body").delegate("#add_more", "click", function () {

@@ -32,67 +32,135 @@ class StockInOutController extends Controller
     }
 
 
-    public function stockIn(Request $request)
+    public function stockInDeliveryChalan(Request $request)
     {
         return view('stockInOut.stockIn');
     }
 
 
+    public function stockInReceivingIndent(Request $request)
+    {
+        return view('stockInOut.stockInReceivingIndent');
+    }
+
     public function stockInStore(Request $request)
     {
+
         $product_quantity = array_combine($request->store_item, $request->quantity);
         $flag = false;
-        try {
 
-            DB::beginTransaction();
+        if ($request->chalan_type == "PurchaseOrder") {
+            try {
+                DB::beginTransaction();
+                foreach ($product_quantity as $key => $value) {
+                    // Find purchase order number and their product
+                    $purchase_order_items = PurchaseOrder::find($request->purchase_order_id)->purchase_order_items;
 
-            foreach ($product_quantity as $key => $value) {
+                    if (!empty($purchase_order_items->where('product_id', $key)->first())) {
 
-                // Find purchase order number and their product
-                 $purchase_order_items = PurchaseOrder::find($request->purchase_order_id)->purchase_order_items;
+                        $purchase_order_item = $purchase_order_items->where('product_id', $key)->first();
 
-                if (!empty($purchase_order_items->where('product_id',$key)->first()))
-                {
-                    $purchase_order_item = $purchase_order_items->where('product_id',$key)->first();
 
-                    $balance = $purchase_order_item->balance;
+                        $balance = $purchase_order_item->balance;
 
-                    $purchase_order_item->update([
-                        'balance' => $balance + $value,
-                    ]);
+                        $purchase_order_item->update([
+                            'balance' => $balance + $value,
+                        ]);
 
+                        if ($request->hasFile('attachment_path_1')) {
+                            $path = $request->file('attachment_path_1')->store('', 'public');
+                            $request->merge(['attachment_path' => $path]);
+                        }
+
+                        $stock_in = StockInOut::create([
+                            'product_id' => $key,
+                            'chalan_type' => $request->chalan_type,
+                            'purchase_order_id' => $request->purchase_order_id,
+                            'delivery_chalan_receiving_date' => $request->delivery_chalan_receiving_date,
+                            'delivery_chalan_number' => $request->delivery_chalan_number,
+                            'delivery_chalan_date' => $request->delivery_chalan_date,
+                            'inspection_certification_number' => $request->inspection_certification_number,
+                            'inspection_certification_date' => $request->inspection_certification_date,
+                            'receiving_person_name' => $request->receiving_person_name,
+                            'receiving_person_designation' => $request->receiving_person_designation,
+                            'from_supplier_person' => $request->from_supplier_person,
+                            'from_supplier_designation' => $request->from_supplier_designation,
+                            'quantity' => $value,
+                            'attachment_path' => $request->attachment_path,
+                        ]);
+
+                        $stock_item = Product::find($key);
+                        $item_quantity = $stock_item->quantity + $value;
+                        $stock_item->update(['quantity' => $item_quantity]);
+                        $stock_in->update(['balance' => $item_quantity]);
+
+                    } else {
+                        throw new \Exception();
+                    }
+                }
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                $flag = true;
+            }
+
+            if ($flag) {
+                session()->flash('error', 'Error something went wrong!. Your Purchase Order no does not match with submit store item and quantity input please check and retry.');
+                return to_route('product.stockInDeliveryChalan');
+            } else {
+                session()->flash('success', 'Your stock has been successfully updated...');
+                return to_route('product.stockInDeliveryChalan');
+            }
+        } elseif ($request->chalan_type == "Indent") {
+
+            try {
+                DB::beginTransaction();
+                foreach ($product_quantity as $key => $value) {
+                    if ($request->hasFile('attachment_path_1')) {
+                        $path = $request->file('attachment_path_1')->store('', 'public');
+                        $request->merge(['attachment_path' => $path]);
+                    }
                     $stock_in = StockInOut::create([
                         'product_id' => $key,
-                        'supplier_id' => $request->supplier_id,
+                        'chalan_type' => $request->chalan_type,
+                        'indent_no' => $request->indent_no,
+                        'indent_date' => $request->indent_date,
+                        'division_id' => $request->division_id,
+                        'scheme_name' => $request->scheme_name,
+                        'approved_by_name' => $request->approved_by_name,
+                        'approved_by_designation' => $request->approved_by_designation,
+                        'received_by_name' => $request->received_by_name,
+                        'received_by_designation' => $request->received_by_designation,
                         'quantity' => $value,
-                        'purchase_order_id' => $request->purchase_order_id,
-                        'receiving_po_date' => $request->receiving_po_date,
+                        'attachment_path' => $request->attachment_path,
                     ]);
-
                     $stock_item = Product::find($key);
                     $item_quantity = $stock_item->quantity + $value;
                     $stock_item->update(['quantity' => $item_quantity]);
                     $stock_in->update(['balance' => $item_quantity]);
-                } else
-                {
-                    $flag = true;
-                    throw new \Exception();
                 }
-
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                $flag = true;
             }
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();
+
+            if ($flag) {
+                session()->flash('error', 'Error something went wrong!. Your Purchase Order no does not match with submit store item and quantity input please check and retry.');
+                return to_route('product.stockInReceivingIndent');
+            } else {
+                session()->flash('success', 'Your stock has been successfully updated...');
+                return to_route('product.stockInReceivingIndent');
+            }
+
         }
 
-        if ($flag) {
-            session()->flash('error', 'Error something went wrong!. Your PO Item does not match with your input please check and retry.');
-            return to_route('product.stockIn');
-        } else {
-            session()->flash('success', 'Your stock has been successfully updated...');
-            return to_route('product.stockIn');
-        }
 
+    }
+
+    public function stockOutIndent(Request $request)
+    {
+        return view('stockOut.stockOutIndent');
     }
 
     /**
@@ -117,37 +185,39 @@ class StockInOutController extends Controller
 
     public function stockOutStore(Request $request)
     {
-
-        $product_quantity = [];
-        foreach (array_combine($request->product_id, $request->quantity) as $pro => $quantity) {
-            $product_quantity[$pro] = $quantity;
-        }
-
+        $product_quantity = array_combine($request->store_item, $request->quantity);
         $flag = false;
+//        dd($request->all());
+
         try {
             DB::beginTransaction();
             foreach ($product_quantity as $prod => $quan) {
-                $previous_quantity = 0;
+                $remaining_quantity = 0;
                 $product = Product::find($prod);
-                if ($request->type == "Out") {
-                    if ($quan > $product->quantity) {
-                        session()->flash('error', 'Quantity is greater then the available quantity.');
-                        return redirect()->route('product.stockOut');
-                    } else {
-                        $previous_quantity = $product->quantity;
-                        $product->quantity = $product->quantity - $quan;
-                        $product->save();
-                    }
-                    $stockInOut = StockInOut::create([
-                        'product_id' => $prod,
-                        'division_id' => $request->division_id,
-                        'quantity' => $quan,
-                        'previous_quantity' => $previous_quantity,
-                        'indent_no' => $request->indent_no,
-                        'indent_date' => $request->indent_date,
-                        'type' => $request->type,
-                    ]);
+                if ($quan > $product->quantity) {
+                    session()->flash('error', 'Quantity is greater then the available quantity.');
+                    return redirect()->route('product.stockOut');
+                } else {
+                    $remaining_quantity = $product->quantity - $quan;
+                    $product->quantity = $product->quantity - $quan;
+                    $product->save();
+
                 }
+                $stockInOut = StockInOut::create([
+                    'indent_no' => $request->indent_no,
+                    'chalan_type' => $request->chalan_type,
+                    'indent_date' => $request->indent_date,
+                    'division_id' => $request->division_id,
+                    'scheme_name' => $request->scheme_name,
+                    'approved_by_name' => $request->approved_by_name,
+                    'approved_by_designation' => $request->approved_by_designation,
+                    'received_by_name' => $request->received_by_name,
+                    'received_by_designation' => $request->received_by_designation,
+                    'product_id' => $prod,
+                    'quantity' => $quan,
+                    'balance' => $remaining_quantity,
+                    'type' => 'Debit',
+                ]);
             }
             $flag = true;
             DB::commit();
@@ -157,7 +227,7 @@ class StockInOutController extends Controller
 
         if ($flag) {
             session()->flash('success', 'Stock out successfully.');
-            return redirect()->route('product.index');
+            return redirect()->route('product.stockOut');
         } else {
             session()->flash('error', 'Error something went wrong.');
             return redirect()->route('product.stockOut');
