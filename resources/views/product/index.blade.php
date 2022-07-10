@@ -68,6 +68,7 @@
                         <th>Name of Item</th>
                         <th>Unit</th>
                         <th>Category Code</th>
+                        <th>Quantity</th>
                         <th>Status</th>
                         <th>Created At</th>
                         <th>Updated At</th>
@@ -85,6 +86,7 @@
                             <td>{{$si->name}}</td>
                             <td>{{$si->unit}}</td>
                             <td class="text-center">{{$si->category->name}}</td>
+                            <td class="text-center">{{$si->quantity}}</td>
                             <td>
                                 @if($si->status)
                                     Active
