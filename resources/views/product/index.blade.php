@@ -69,9 +69,9 @@
                         <th>Unit</th>
                         <th>Category Code</th>
                         <th>Quantity</th>
-                        <th>Status</th>
-                        <th>Created At</th>
-                        <th>Updated At</th>
+                        <th class="d-print-none">Status</th>
+                        <th class="d-print-none">Created At</th>
+                        <th class="d-print-none">Updated At</th>
                         {{--                            <th>Quantity</th>--}}
                         @canany(['edit','delete'])
                         <th class="text-center d-print-none">Action</th>
@@ -87,15 +87,15 @@
                             <td>{{$si->unit}}</td>
                             <td class="text-center">{{$si->category->name}}</td>
                             <td class="text-center">{{$si->quantity}}</td>
-                            <td>
+                            <td class="d-print-none">
                                 @if($si->status)
                                     Active
                                 @else
                                     In-Active
                                 @endif
                             </td>
-                            <td>{{\Carbon\Carbon::parse($si->created_at)->format('d-m-Y')}}</td>
-                            <td>{{\Carbon\Carbon::parse($si->updated_at)->format('d-m-Y')}}</td>
+                            <td class="d-print-none">{{\Carbon\Carbon::parse($si->created_at)->format('d-m-Y')}}</td>
+                            <td class="d-print-none">{{\Carbon\Carbon::parse($si->updated_at)->format('d-m-Y')}}</td>
                             @canany(['edit','delete'])
                                 <td class="text-center d-print-none">
                                     <a href="{{route('product.edit',$si->id)}}" class="btn btn-outline-primary btn-sm" title="Edit Store Item">

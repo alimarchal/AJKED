@@ -10,13 +10,13 @@
     @if($scheme->isNotEmpty())
         <table class="table table-striped table-bordered">
             <thead>
-            <tr class="text-center">
+            <tr>
                 <th class="text-center">ID</th>
-                <th>Approval number</th>
+                <th>Approval Number</th>
                 <th>Date</th>
-                <th class="text-center">Name of Scheme</th>
-                <th>Type of Scheme</th>
-                <th class="text-center">Item Name & Quantity</th>
+                <th class="text-center">Scheme</th>
+                <th>Scheme Type</th>
+                <th class="text-center">Item & Quantity</th>
                 <th>Approved by</th>
                 <th>Designation</th>
                 <th>Name</th>
@@ -28,20 +28,21 @@
             <tbody>
             @foreach($scheme as $sch)
                 <tr>
-                    <td class="text-center">
+                    <td>
                         {{$sch->id}}
                     </td>
                     <td>{{$sch->approval_number}}</td>
-                    <td class="text-center">{{\Carbon\Carbon::parse($sch->date)->format('d-m-Y')}}</td>
+                    <td>{{\Carbon\Carbon::parse($sch->date)->format('d-m-Y')}}</td>
                     <td>{{$sch->name_of_scheme}}</td>
-                    <td class="text-center">
+                    <td>
                         {{$sch->type_of_scheme}}
                     </td>
                     <td>
 
                         @foreach($sch->scheme_items as $item)
                             Name: <span class="font-weight-bold">{{\App\Models\Product::find($item->product_id)->name}}<br></span>
-                            Quantity: <span class="font-weight-bold">{{$item->quantity}}</span> <br>
+                            Quantity: <span class="font-weight-bold">{{$item->quantity}}</span> -
+                            Received: <span class="font-weight-bold">{{$item->balance}}</span> <br>
                         @endforeach
 
                     </td>

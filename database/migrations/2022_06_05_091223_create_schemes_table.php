@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('designation')->nullable();
             $table->string('name')->nullable();
             $table->string('approved_by')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

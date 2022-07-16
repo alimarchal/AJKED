@@ -15,6 +15,10 @@
         Stock Out
     </h4>
 
+
+
+
+
     <form method="post" action="{{route('product.stockOutStore')}}" onsubmit="return confirm('Do you really want to submit the form?');" enctype="multipart/form-data">
         @csrf
         <div class="form-row">
@@ -37,16 +41,6 @@
                     @foreach(\App\Models\Division::all() as $division)
                         <option value="{{$division->id}}">{{$division->name }}</option>
                     @endforeach
-                </select>
-            </div>
-
-            <div class="form-group col-md-3">
-                <label for="scheme_name">Scheme (Normal/ADP)</label>
-                <select class="form-control select2" id="scheme_name" name="scheme_name">
-                    <option value="None" selected>None</option>
-                    <option value="Normal">Normal</option>
-                    <option value="Deposit">Deposit</option>
-                    <option value="Development">Development (ADP)</option>
                 </select>
             </div>
 

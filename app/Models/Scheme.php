@@ -17,6 +17,7 @@ class Scheme extends Model
         'designation',
         'name',
         'approved_by',
+        'status',
     ];
 
 

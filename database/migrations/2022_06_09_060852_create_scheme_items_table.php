@@ -21,7 +21,8 @@ return new class extends Migration
             // store item id
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
-            $table->decimal('quantity',10,2);
+            $table->decimal('quantity',10,2)->default(0.00);
+            $table->decimal('balance',10,2)->default(0.00);
             $table->timestamps();
         });
     }

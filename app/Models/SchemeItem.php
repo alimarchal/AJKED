@@ -13,5 +13,6 @@ class SchemeItem extends Model
         'scheme_id',
         'product_id',
         'quantity',
+        'balance',
     ];
 }

@@ -41,10 +41,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/stockInDeliveryChalan', [\App\Http\Controllers\StockInOutController::class, 'stockInDeliveryChalan'])->name('product.stockInDeliveryChalan');
     Route::get('/stockInReceivingIndent', [\App\Http\Controllers\StockInOutController::class, 'stockInReceivingIndent'])->name('product.stockInReceivingIndent');
+    Route::get('/stockInReceivingScheme', [\App\Http\Controllers\StockInOutController::class, 'stockInReceivingScheme'])->name('product.stockInReceivingScheme');
     Route::post('/stockInStore', [\App\Http\Controllers\StockInOutController::class, 'stockInStore'])->name('product.stockInStore');
+
 
     Route::get('/stockOut', [\App\Http\Controllers\StockInOutController::class, 'stockOutIndent'])->name('product.stockOut');
     Route::get('/stockOutStore', [\App\Http\Controllers\StockInOutController::class, 'stockOutStore'])->name('product.stockOutStore');
+    Route::get('/stockOutScheme', [\App\Http\Controllers\StockInOutController::class, 'stockOutIndentScheme'])->name('product.stockOutScheme');
+    Route::Post('/stockOutSchemeStore', [\App\Http\Controllers\StockInOutController::class, 'stockOutSchemeStore'])->name('product.stockOutSchemeStore');
+
 
     Route::get('/stockInRegister', [\App\Http\Controllers\StockInOutController::class, 'stockInRegister'])->name('product.stockInRegister');
     Route::get('/stockOutRegister', [\App\Http\Controllers\StockInOutController::class, 'stockOutRegister'])->name('product.stockOutRegister');

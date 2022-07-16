@@ -36,6 +36,7 @@ class StockInOut extends Model
         'return',
         'chalan_type',
         'scheme_id',
+        'general_date',
     ];
 
     public function product()

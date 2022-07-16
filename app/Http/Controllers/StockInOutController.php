@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateStockInOutRequest;
 use App\Models\Product;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
+use App\Models\Scheme;
 use App\Models\StockInOut;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -43,9 +44,15 @@ class StockInOutController extends Controller
         return view('stockInOut.stockInReceivingIndent');
     }
 
+    public function stockInReceivingScheme(Request $request)
+    {
+        return view('stockInOut.stockInReceivingScheme');
+    }
+
     public function stockInStore(Request $request)
     {
 
+//        dd($request->all());
         $product_quantity = array_combine($request->store_item, $request->quantity);
         $flag = false;
 
@@ -61,11 +68,18 @@ class StockInOutController extends Controller
                         $purchase_order_item = $purchase_order_items->where('product_id', $key)->first();
 
 
-                        $balance = $purchase_order_item->balance;
+                       if ($value <= $purchase_order_item->quantity && ($value + $purchase_order_item->balance) <= $purchase_order_item->quantity)
+                       {
+                           $balance = $purchase_order_item->balance;
+                           $purchase_order_item->update([
+                               'balance' => $balance + $value,
+                           ]);
+                       } else
+                       {
+                           throw new \Exception();
+                       }
 
-                        $purchase_order_item->update([
-                            'balance' => $balance + $value,
-                        ]);
+
 
                         if ($request->hasFile('attachment_path_1')) {
                             $path = $request->file('attachment_path_1')->store('', 'public');
@@ -77,6 +91,7 @@ class StockInOutController extends Controller
                             'chalan_type' => $request->chalan_type,
                             'purchase_order_id' => $request->purchase_order_id,
                             'delivery_chalan_receiving_date' => $request->delivery_chalan_receiving_date,
+                            'general_date' => $request->delivery_chalan_receiving_date,
                             'delivery_chalan_number' => $request->delivery_chalan_number,
                             'delivery_chalan_date' => $request->delivery_chalan_date,
                             'inspection_certification_number' => $request->inspection_certification_number,
@@ -125,6 +140,7 @@ class StockInOutController extends Controller
                         'chalan_type' => $request->chalan_type,
                         'indent_no' => $request->indent_no,
                         'indent_date' => $request->indent_date,
+                        'general_date' => $request->indent_date,
                         'division_id' => $request->division_id,
                         'scheme_name' => $request->scheme_name,
                         'approved_by_name' => $request->approved_by_name,
@@ -153,6 +169,78 @@ class StockInOutController extends Controller
                 return to_route('product.stockInReceivingIndent');
             }
 
+        } elseif ($request->chalan_type == "Scheme") {
+
+            try {
+                DB::beginTransaction();
+
+                $type_of_scheme = Scheme::find($request->scheme_id)->type_of_scheme;
+                foreach ($product_quantity as $key => $value) {
+                    // Find purchase order number and their product
+                    $scheme_items = Scheme::find($request->scheme_id)->scheme_items;
+
+                    if (!empty($scheme_items->where('product_id', $key)->first())) {
+
+                        $scheme_items = $scheme_items->where('product_id', $key)->first();
+
+
+                        if ($value <= $scheme_items->quantity && ($value + $scheme_items->balance) <= $scheme_items->quantity)
+                        {
+                            $balance = $scheme_items->balance;
+
+                            $scheme_items->update([
+                                'balance' => $balance + $value,
+                            ]);
+                        } else
+                        {
+                            throw new \Exception();
+                        }
+
+                        if ($request->hasFile('attachment_path_1')) {
+                            $path = $request->file('attachment_path_1')->store('', 'public');
+                            $request->merge(['attachment_path' => $path]);
+                        }
+
+                        $stock_in = StockInOut::create([
+                            'product_id' => $key,
+                            'chalan_type' => $request->chalan_type,
+                            'indent_no' => $request->indent_no,
+                            'indent_date' => $request->indent_date,
+                            'general_date' => $request->indent_date,
+                            'division_id' => $request->division_id,
+                            'scheme_name' => $type_of_scheme,//get dynamic
+                            'scheme_id' => $request->scheme_id,
+                            'approved_by_name' => $request->approved_by_name,
+                            'approved_by_designation' => $request->approved_by_designation,
+                            'received_by_name' => $request->received_by_name,
+                            'received_by_designation' => $request->received_by_designation,
+                            'quantity' => $value,
+                            'attachment_path' => $request->attachment_path,
+                        ]);
+
+                        $stock_item = Product::find($key);
+                        $item_quantity = $stock_item->quantity + $value;
+                        $stock_item->update(['quantity' => $item_quantity]);
+                        $stock_in->update(['balance' => $item_quantity]);
+
+                    } else {
+                        throw new \Exception();
+                    }
+                }
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                $flag = true;
+            }
+
+            if ($flag) {
+                session()->flash('error', 'Error something went wrong!. Your Scheme no does not match with submit store item and quantity input please check and retry.');
+                return to_route('product.stockInReceivingScheme');
+            } else {
+                session()->flash('success', 'Your stock has been successfully updated...');
+                return to_route('product.stockInReceivingScheme');
+            }
+
         }
 
 
@@ -161,6 +249,12 @@ class StockInOutController extends Controller
     public function stockOutIndent(Request $request)
     {
         return view('stockOut.stockOutIndent');
+    }
+
+
+    public function stockOutIndentScheme(Request $request)
+    {
+        return view('stockOut.stockOutIndentScheme');
     }
 
     /**
@@ -187,16 +281,17 @@ class StockInOutController extends Controller
     {
         $product_quantity = array_combine($request->store_item, $request->quantity);
         $flag = false;
-//        dd($request->all());
+        $quantity = false;
 
         try {
             DB::beginTransaction();
             foreach ($product_quantity as $prod => $quan) {
+
                 $remaining_quantity = 0;
                 $product = Product::find($prod);
                 if ($quan > $product->quantity) {
-                    session()->flash('error', 'Quantity is greater then the available quantity.');
-                    return redirect()->route('product.stockOut');
+                    $quantity = true;
+                    throw new \Exception();
                 } else {
                     $remaining_quantity = $product->quantity - $quan;
                     $product->quantity = $product->quantity - $quan;
@@ -207,8 +302,8 @@ class StockInOutController extends Controller
                     'indent_no' => $request->indent_no,
                     'chalan_type' => $request->chalan_type,
                     'indent_date' => $request->indent_date,
+                    'general_date' => $request->indent_date,
                     'division_id' => $request->division_id,
-                    'scheme_name' => $request->scheme_name,
                     'approved_by_name' => $request->approved_by_name,
                     'approved_by_designation' => $request->approved_by_designation,
                     'received_by_name' => $request->received_by_name,
@@ -229,8 +324,97 @@ class StockInOutController extends Controller
             session()->flash('success', 'Stock out successfully.');
             return redirect()->route('product.stockOut');
         } else {
-            session()->flash('error', 'Error something went wrong.');
+
+            if ($quantity) {
+                session()->flash('error', 'Error something went wrong. Quantity is greater then the available quantity.');
+            } else {
+                session()->flash('error', 'Error something went wrong.');
+            }
             return redirect()->route('product.stockOut');
+        }
+    }
+
+
+    public function stockOutSchemeStore(Request $request)
+    {
+
+        $product_quantity = array_combine($request->store_item, $request->quantity);
+        $flag = false;
+
+        try {
+            DB::beginTransaction();
+
+            $type_of_scheme = Scheme::find($request->scheme_id)->type_of_scheme;
+            $remaining_quantity = 0;
+            foreach ($product_quantity as $key => $value) {
+                // Find scheme number and their product
+                $scheme_items = Scheme::find($request->scheme_id)->scheme_items;
+
+                if (!empty($scheme_items->where('product_id', $key)->first())) {
+
+                    $scheme_items = $scheme_items->where('product_id', $key)->first();
+
+
+                    $balance = $scheme_items->balance;
+                    $product_balance = Product::find($key)->quantity;
+
+//                    dd($value);
+                    if ($value <= $balance && $value <= $product_balance) {
+                        $scheme_items->stock_out_balance = $scheme_items->stock_out_balance + $value;
+                        $scheme_items->save();
+
+                    } else {
+                        throw new \Exception();
+                    }
+
+
+                    $product = Product::find($key);
+                    $product->quantity = $product->quantity - $value;
+                    $product->save();
+
+                    $remaining_quantity = $product->quantity;
+
+
+
+                    if ($request->hasFile('attachment_path_1')) {
+                        $path = $request->file('attachment_path_1')->store('', 'public');
+                        $request->merge(['attachment_path' => $path]);
+                    }
+
+                    $stock_in = StockInOut::create([
+                        'indent_no' => $request->indent_no,
+                        'chalan_type' => $request->chalan_type,
+                        'scheme_id' => $request->scheme_id,
+                        'scheme_name' => Scheme::find($request->scheme_id)->type_of_scheme,
+                        'indent_date' => $request->indent_date,
+                        'general_date' => $request->indent_date,
+                        'division_id' => $request->division_id,
+                        'approved_by_name' => $request->approved_by_name,
+                        'approved_by_designation' => $request->approved_by_designation,
+                        'received_by_name' => $request->received_by_name,
+                        'received_by_designation' => $request->received_by_designation,
+                        'product_id' => $key,
+                        'quantity' => $value,
+                        'balance' => $remaining_quantity,
+                        'type' => 'Debit',
+                    ]);
+
+                } else {
+                    throw new \Exception();
+                }
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            $flag = true;
+        }
+
+        if ($flag) {
+            session()->flash('error', 'Error something went wrong. Quantity is greater then the available quantity.');
+            return redirect()->route('product.stockOutScheme');
+        } else {
+            session()->flash('success', 'Stock out successfully.');
+            return redirect()->route('product.stockOutScheme');
         }
     }
 

@@ -33,30 +33,32 @@
 
 
 
-    <li class="nav-item @if(request()->routeIs(['product.stockInDeliveryChalan','product.stockInDeliveryChalan'])) active @endif">
+    <li class="nav-item @if(request()->routeIs(['product.stockInDeliveryChalan','product.stockInDeliveryChalan','product.stockInReceivingScheme'])) active @endif">
         <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseReport"
            aria-expanded="true" aria-controls="collapseReport">
             <i class="fas fa-fw fa-clipboard-list"></i>
-            <span>Delivery Chalan</span>
+            <span>Stock In</span>
         </a>
-        <div id="collapseReport" class="collapse  @if(request()->routeIs(['product.stockInDeliveryChalan','product.stockInReceivingIndent'])) show @endif" aria-labelledby="headingReport" data-parent="#accordionSidebar">
+        <div id="collapseReport" class="collapse  @if(request()->routeIs(['product.stockInDeliveryChalan','product.stockInReceivingIndent','product.stockInReceivingScheme'])) show @endif" aria-labelledby="headingReport" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 {{--                <h6 class="collapse-header">Custom Components:</h6>--}}
                 <a class="collapse-item @if(request()->routeIs('product.stockInDeliveryChalan')) active @endif" href="{{route('product.stockInDeliveryChalan')}}">Delivery Chalan</a>
-                <a class="collapse-item @if(request()->routeIs('product.stockInReceivingIndent')) active @endif" href="{{route('product.stockInReceivingIndent')}}">Receiving Indent (Receipt)</a>
+                <a class="collapse-item @if(request()->routeIs('product.stockInReceivingIndent')) active @endif" href="{{route('product.stockInReceivingIndent')}}">Indent (Receipt)</a>
+                <a class="collapse-item @if(request()->routeIs('product.stockInReceivingScheme')) active @endif" href="{{route('product.stockInReceivingScheme')}}">Receiving (Scheme)</a>
             </div>
         </div>
     </li>
 
-    <li class="nav-item @if(request()->routeIs(['product.stockOut'])) active @endif">
+    <li class="nav-item @if(request()->routeIs(['product.stockOut','product.stockOutScheme'])) active @endif">
         <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseReport-1"
            aria-expanded="true" aria-controls="collapseReport">
             <i class="fas fa-fw fa-clipboard-list"></i>
             <span>Stock Out</span>
         </a>
-        <div id="collapseReport-1" class="collapse  @if(request()->routeIs(['product.stockOut'])) show @endif" aria-labelledby="headingReport" data-parent="#accordionSidebar">
+        <div id="collapseReport-1" class="collapse  @if(request()->routeIs(['product.stockOut','product.stockOutScheme'])) show @endif" aria-labelledby="headingReport" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item @if(request()->routeIs('product.stockOut')) active @endif" href="{{route('product.stockOut')}}">Stock Out</a>
+                <a class="collapse-item @if(request()->routeIs('product.stockOut')) active @endif" href="{{route('product.stockOut')}}">Indent</a>
+                <a class="collapse-item @if(request()->routeIs('product.stockOutScheme')) active @endif" href="{{route('product.stockOutScheme')}}">Scheme</a>
             </div>
         </div>
     </li>

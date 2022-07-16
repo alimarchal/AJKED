@@ -53,22 +53,6 @@ class SchemeController extends Controller
                 'product_id' => $key,
                 'quantity' => $value,
             ]);
-
-            $store_item = Product::find($key);
-            $quantity = ($store_item->quantity + $value);
-
-            $stock_in = StockInOut::create([
-                'product_id' => $key,
-                'quantity' => $value,
-                'chalan_type' => 'Scheme',
-                'type' => 'Credit',
-                'scheme_id' => $scheme->id,
-            ]);
-
-            $item_quantity = $store_item->quantity + $value;
-            $store_item->update(['quantity' => $quantity]);
-            $stock_in->update(['balance' => $item_quantity]);
-
         }
 
         session()->flash('success', 'Scheme successfully created.');
