@@ -25,7 +25,7 @@ class CategoryController extends Controller
     {
         $category = QueryBuilder::for(Category::class)
             ->allowedFilters('name')
-            ->paginate(25)->withQueryString();
+            ->paginate(50)->withQueryString();
         return view('category.index', compact('category'));
     }
 

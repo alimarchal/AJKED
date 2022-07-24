@@ -2,12 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class StockInOut extends Model
 {
     use HasFactory;
+//    public function scopeSearchString(Builder $query, $search): Builder
+//    {
+//        return $query->where('name', 'LIKE', '%' . $search . '%')->
+//        orWhere('branch_id', 'LIKE', '%' . $search . '%')->
+//        orWhere('permanent_address', 'LIKE', '%' . $search . '%');
+//    }
 
     protected $fillable = [
         'product_id',

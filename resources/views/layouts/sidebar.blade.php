@@ -63,6 +63,22 @@
         </div>
     </li>
 
+    <li class="nav-item @if(request()->routeIs(['transactionHistory.*','report.stockReturn'])) active @endif">
+        <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseReport-99"
+           aria-expanded="true" aria-controls="collapseReport">
+            <i class="fas fa-fw fa-clipboard-list"></i>
+            <span>Reports</span>
+        </a>
+        <div id="collapseReport-99" class="collapse  @if(request()->routeIs(['transactionHistory.*','report.stockReturn'])) show @endif" aria-labelledby="headingReport" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item @if(request()->routeIs('transactionHistory.index')) active @endif" href="{{route('transactionHistory.index')}}">Transaction History</a>
+                <a class="collapse-item @if(request()->routeIs('report.stockReturn')) active @endif" href="{{route('report.stockReturn')}}">Stock Return</a>
+            </div>
+        </div>
+
+
+    </li>
+
 
 
 

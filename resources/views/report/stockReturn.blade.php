@@ -23,12 +23,12 @@
 
             table.table-bordered > thead > tr > th {
                 border: 1px solid black !important;
-                color: black !important;;
+                color: black !important;
             }
 
             table.table-bordered > tbody > tr > td {
                 border: 1px solid black !important;;
-                color: black !important;;
+                color: black !important;
             }
         }
 
@@ -56,34 +56,31 @@
                 <input type="date" class="form-control" id="month" name="month">
 
             </div>
-
-            <div class="form-group col-md-4">
-            </div>
-
-
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-8 d-print-none">
+                <br>
                 <button type="submit" class="btn btn-success float-right ml-4">Search</button>
-                <button class="btn btn-primary float-right mr-4" onclick="window.print()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-                        <path
-                            d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
-                    </svg>
-                    Print
-                </button>
             </div>
-
-
         </div>
+
     </form>
+
+<div class="row d-print-none">
+    <div class="col-md-12 float-right">
+        <button class="btn btn-primary float-right mr-4" onclick="window.print()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+                <path
+                    d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+            </svg>
+            Print
+        </button>
+    </div>
+</div>
     <br>
 
     <!-- Page Heading -->
-    <h4 class="h4 mb-4 text-dark font-weight-bold text-center text-uppercase"> Store Stock Return Electricity Division Muzaffarabad For the month of
-        {{\Carbon\Carbon::parse($date_from)->format('m/Y')}}
+    <h4 class="h4 mb-4 text-dark font-weight-bold text-center text-uppercase"> Store Stock Return Electricity Division Muzaffarabad For the month of {{\Carbon\Carbon::parse($date_from)->format('m/Y')}}
     </h4>
-
-
     <table class="table table-bordered table-responsive">
         <thead>
 
@@ -91,9 +88,11 @@
             <th rowspan="2" style="vertical-align : middle;text-align:center;" >S#</th>
             <th rowspan="2" style="vertical-align : middle;text-align:center;">Name of Item</th>
             <th  rowspan="2" style="vertical-align : middle;text-align:center;">Unit</th>
+            <th rowspan="2" style="vertical-align : middle;text-align:center;">B.F Opening Balance {{\Carbon\Carbon::parse($date_from)->subMonth()->format('m/Y')}}</th>
             <th rowspan="2" style="vertical-align : middle;text-align:center;">Received Material During {{\Carbon\Carbon::parse($date_from)->format('m/Y')}}</th>
+            <th rowspan="2" style="vertical-align : middle;text-align:center;">Total Material in Store Ending {{\Carbon\Carbon::parse($date_from)->format('m/Y')}}</th>
             <th colspan="{{\App\Models\Division::count()+1}}" style="vertical-align : middle;text-align:center;"> Issued</th>
-            <th rowspan="2" style="vertical-align : middle;text-align:center;">Closing Balance Ending {{\Carbon\Carbon::parse($date_from)->format('m/Y')}}</th>>
+            <th rowspan="2" style="vertical-align : middle;text-align:center;">Closing Balance Ending {{\Carbon\Carbon::parse($date_from)->format('m/Y')}}</th>
         </tr>
         <tr class="text-center">
 
@@ -112,12 +111,30 @@
                 <td style="white-space: nowrap">{{$product->name}}</td>
                 <td class="text-center">{{$product->unit}}</td>
                 <td class="text-center">
+                    @php $count_total_ending = 0; @endphp
+                    @if(!empty(\App\Models\StockInOut::where('product_id', $product->id)->whereBetween('stock_in_outs.general_date', [\Carbon\Carbon::parse($date_from)->subMonth()->firstOfMonth()->format('Y-m-d'), \Carbon\Carbon::parse($date_from)->subMonth()->lastOfMonth()->format('Y-m-d')])->latest()->first()))
+                        {{\App\Models\StockInOut::where('product_id', $product->id)->whereBetween('stock_in_outs.general_date', [\Carbon\Carbon::parse($date_from)->subMonth()->firstOfMonth()->format('Y-m-d'), \Carbon\Carbon::parse($date_from)->subMonth()->lastOfMonth()->format('Y-m-d')])->latest()->first()->balance}}
+                        @php $count_total_ending = \App\Models\StockInOut::where('product_id', $product->id)->whereBetween('stock_in_outs.general_date', [\Carbon\Carbon::parse($date_from)->subMonth()->firstOfMonth()->format('Y-m-d'), \Carbon\Carbon::parse($date_from)->subMonth()->lastOfMonth()->format('Y-m-d')])->latest()->first()->balance @endphp
+                    @else
+                        0
+                    @endif
+                </td>
+                <td class="text-center">
                     @if($received_material->where('product_id', $product->id)->isNotEmpty())
+                        @php $count_total_ending = $count_total_ending + $received_material->where('product_id', $product->id)->first()->quantity; @endphp
                         {{$received_material->where('product_id', $product->id)->first()->quantity}}
                     @else
                         0
                     @endif
                 </td>
+
+
+                <td class="text-center">
+                    {{number_format($count_total_ending,2)}}
+                </td>
+
+
+
                 @php
                     $horizantal_sum = 0;
                 @endphp
@@ -140,7 +157,18 @@
                 @endforeach
 
                 <td class="text-right font-weight-bold">{{ number_format($horizantal_sum,2) }}</td>
-                <td class="text-right font-weight-bold">{{ number_format($product->quantity,2) }}</td>
+
+                <td class="text-right font-weight-bold">
+                    @if(\Carbon\Carbon::today()->format('m-Y') == \Carbon\Carbon::parse($date_from)->format('m-Y'))
+                        {{ number_format($product->quantity,2)}}
+                    @else
+                        @if(!empty(\App\Models\StockInOut::where('product_id', $product->id)->whereBetween('stock_in_outs.general_date', [\Carbon\Carbon::parse($date_from)->firstOfMonth()->format('Y-m-d'), \Carbon\Carbon::parse($date_from)->lastOfMonth()->format('Y-m-d')])->latest()->first()))
+                            {{\App\Models\StockInOut::where('product_id', $product->id)->whereBetween('stock_in_outs.general_date', [\Carbon\Carbon::parse($date_from)->firstOfMonth()->format('Y-m-d'), \Carbon\Carbon::parse($date_from)->lastOfMonth()->format('Y-m-d')])->latest()->first()->balance}}
+                        @else
+                            0
+                        @endif
+                    @endif
+                </td>
 
                 @php
                     $horizantal_sum = 0;

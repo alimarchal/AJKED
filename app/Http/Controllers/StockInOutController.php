@@ -569,15 +569,12 @@ class StockInOutController extends Controller
     {
         $product = Product::find($request->product_id);
         $flag = false;
-
         if ($request->type == "Out") {
-
             if ($request->quantity > $product->quantity) {
                 session()->flash('error', 'Your quantity is greater then the available.');
                 return redirect()->route('product.index');
             }
         }
-
         try {
             DB::beginTransaction();
             $request->merge(['previous_quantity' => $product->quantity]);

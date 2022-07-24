@@ -19,7 +19,11 @@
 
     <!-- Custom styles for this template-->
     <link href="{{url('admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
-
+    <style>@media print {
+            @page {
+                size: auto !important
+            }
+        }</style>
     @yield('customHeaderScripts')
 </head>
 <body id="page-top">
@@ -27,9 +31,9 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-<!-- Sidebar -->
+    <!-- Sidebar -->
     @include('layouts.sidebar')
-<!-- End of Sidebar -->
+    <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -38,8 +42,8 @@
         <div id="content">
 
             <!-- Topbar -->
-        @include('layouts/navigation')
-        <!-- End of Topbar -->
+            @include('layouts/navigation')
+            <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
             <div class="container-fluid bg-white p-5">
@@ -107,8 +111,6 @@
 <script src="{{url('admin/vendor/chart.js/Chart.min.js')}}"></script>
 
 <!-- Page level custom scripts -->
-
-
 
 
 @yield('customFooterScripts')

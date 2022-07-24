@@ -72,115 +72,122 @@
                                 <td>1</td>
                                 <td class="text-left">Transformers</td>
                                 <td>
-
-                                    @if(!empty(\App\Models\StockInOut::where('product_id', 2)->whereBetween('created_at', [\Carbon\Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d 00:00:00'),\Carbon\Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d 23:59:59'),])->latest()->first()))
-                                        {{\App\Models\StockInOut::where('product_id', 2)->whereBetween('created_at', [\Carbon\Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d 00:00:00'),\Carbon\Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d 23:59:59'),])->latest()->first()->quantity}}
-                                    @endif
+                                    0.00
+{{--                                    @if(!empty(\App\Models\StockInOut::where('product_id', 2)->whereBetween('created_at', [\Carbon\Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d 00:00:00'),\Carbon\Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d 23:59:59'),])->latest()->first()))--}}
+{{--                                        {{\App\Models\StockInOut::where('product_id', 2)->whereBetween('created_at', [\Carbon\Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d 00:00:00'),\Carbon\Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d 23:59:59'),])->latest()->first()->quantity}}--}}
+{{--                                    @endif--}}
                                 </td>
                                 <td>
-                                    @if(!empty(\App\Models\StockInOut::where('product_id',2)->where('type','Credit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->isNotEmpty()))
-                                        {{number_format(\App\Models\StockInOut::where('product_id',2)->where('type','Credit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}
-                                    @endif
+                                    0.00
+{{--                                    @if(!empty(\App\Models\StockInOut::where('product_id',2)->where('type','Credit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->isNotEmpty()))--}}
+{{--                                        {{number_format(\App\Models\StockInOut::where('product_id',2)->where('type','Credit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}--}}
+{{--                                    @endif--}}
                                 </td>
                                 <td>
-                                    @if(!empty(\App\Models\StockInOut::where('product_id',2)->where('type','Debit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->isNotEmpty()))
-                                        {{number_format(\App\Models\StockInOut::where('product_id',2)->where('type','Debit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}
-                                    @endif
+                                    0.00
+{{--                                    @if(!empty(\App\Models\StockInOut::where('product_id',2)->where('type','Debit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->isNotEmpty()))--}}
+{{--                                        {{number_format(\App\Models\StockInOut::where('product_id',2)->where('type','Debit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}--}}
+{{--                                    @endif--}}
                                 </td>
                                 <td>
-                                    @if(!empty(\App\Models\Product::find(2)))
-                                        {{\App\Models\Product::find(2)->quantity}}
-                                    @endif
+                                    0.00
+{{--                                    @if(!empty(\App\Models\Product::find(2)))--}}
+{{--                                        {{\App\Models\Product::find(2)->quantity}}--}}
+{{--                                    @endif--}}
                                 </td>
                             </tr>
                             <tr>
                                 <td>2</td>
                                 <td class="text-left">HT Sturcture</td>
                                 <td>
-                                    {{\App\Models\StockInOut::where('product_id', 3)->whereBetween('created_at', [\Carbon\Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d 00:00:00'),\Carbon\Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d 23:59:59'),])->latest()->first()->quantity}}
+                                    0.00
+{{--                                    {{\App\Models\StockInOut::where('product_id', 3)->whereBetween('created_at', [\Carbon\Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d 00:00:00'),\Carbon\Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d 23:59:59'),])->latest()->first()->quantity}}--}}
                                 </td>
                                 <td>
-                                    {{number_format(\App\Models\StockInOut::where('product_id',3)->where('type','Credit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}
+                                    0.00
+{{--                                    {{number_format(\App\Models\StockInOut::where('product_id',3)->where('type','Credit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}--}}
                                 </td>
                                 <td>
-                                    {{number_format(\App\Models\StockInOut::where('product_id',3)->where('type','Debit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}
+                                    0.00
+{{--                                    {{number_format(\App\Models\StockInOut::where('product_id',3)->where('type','Debit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}--}}
                                 </td>
                                 <td>
-                                    {{\App\Models\Product::find(3)->quantity}}
+                                    0.00
+{{--                                    {{\App\Models\Product::find(3)->quantity}}--}}
                                 </td>
                             </tr>
                             <tr>
                                 <td>3</td>
                                 <td class="text-left">LT Sturcture</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>4</td>
                                 <td class="text-left">HT Conductor</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>5</td>
                                 <td class="text-left">LT Conductor</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>6</td>
                                 <td class="text-left">Meters</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>7</td>
                                 <td class="text-left">Panels</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>8</td>
                                 <td class="text-left">Cabels</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>9</td>
                                 <td class="text-left">Enamalled Wire</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
                             </tr>
                             <tr>
                                 <td>10</td>
                                 <td class="text-left">Transformer Oil</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
                             </tr>
 
                             <tr>
                                 <td>11</td>
                                 <td class="text-left">Other Items</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
-                                <td>john@example.com</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
                             </tr>
                             </tbody>
                         </table>

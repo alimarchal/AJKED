@@ -51,6 +51,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::Post('/stockOutSchemeStore', [\App\Http\Controllers\StockInOutController::class, 'stockOutSchemeStore'])->name('product.stockOutSchemeStore');
 
 
+    // transaction history
+    Route::get('/transactionHistory', [\App\Http\Controllers\TransactionHistory::class, 'index'])->name('transactionHistory.index');
+
     Route::get('/stockInRegister', [\App\Http\Controllers\StockInOutController::class, 'stockInRegister'])->name('product.stockInRegister');
     Route::get('/stockOutRegister', [\App\Http\Controllers\StockInOutController::class, 'stockOutRegister'])->name('product.stockOutRegister');
     Route::get('/report/stock-return', [\App\Http\Controllers\ReportController::class, 'stockReturn'])->name('report.stockReturn');
