@@ -25,7 +25,7 @@ class ProductController extends Controller
     public function index()
     {
         $product = QueryBuilder::for(Product::class)
-            ->allowedFilters([AllowedFilter::exact('category_id'), 'name', 'unit', 'quantity',])
+            ->allowedFilters([AllowedFilter::exact('category_id'), AllowedFilter::exact('id'),'name', 'unit', 'quantity'])
             ->get();
         return view('product.index', compact('product'));
     }

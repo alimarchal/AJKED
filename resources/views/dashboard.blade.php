@@ -1,5 +1,6 @@
 @include('layouts/header')
 
+
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -53,12 +54,10 @@
                 </div>
 
                 <!-- Content Row -->
-
-                <div class="row bg-white">
                     <div class="table-responsive">
-                        <table class="table table-bordered text-center">
+                        <table class="table table-bordered  bg-white" id="" width="100%" cellspacing="0">
                             <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th>#</th>
                                 <th>Item Name</th>
                                 <th>Opening Balance For The Month</th>
@@ -67,132 +66,39 @@
                                 <th>Present Item Available</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td class="text-left">Transformers</td>
-                                <td>
-                                    0.00
-{{--                                    @if(!empty(\App\Models\StockInOut::where('product_id', 2)->whereBetween('created_at', [\Carbon\Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d 00:00:00'),\Carbon\Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d 23:59:59'),])->latest()->first()))--}}
-{{--                                        {{\App\Models\StockInOut::where('product_id', 2)->whereBetween('created_at', [\Carbon\Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d 00:00:00'),\Carbon\Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d 23:59:59'),])->latest()->first()->quantity}}--}}
-{{--                                    @endif--}}
-                                </td>
-                                <td>
-                                    0.00
-{{--                                    @if(!empty(\App\Models\StockInOut::where('product_id',2)->where('type','Credit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->isNotEmpty()))--}}
-{{--                                        {{number_format(\App\Models\StockInOut::where('product_id',2)->where('type','Credit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}--}}
-{{--                                    @endif--}}
-                                </td>
-                                <td>
-                                    0.00
-{{--                                    @if(!empty(\App\Models\StockInOut::where('product_id',2)->where('type','Debit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->isNotEmpty()))--}}
-{{--                                        {{number_format(\App\Models\StockInOut::where('product_id',2)->where('type','Debit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}--}}
-{{--                                    @endif--}}
-                                </td>
-                                <td>
-                                    0.00
-{{--                                    @if(!empty(\App\Models\Product::find(2)))--}}
-{{--                                        {{\App\Models\Product::find(2)->quantity}}--}}
-{{--                                    @endif--}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td class="text-left">HT Sturcture</td>
-                                <td>
-                                    0.00
-{{--                                    {{\App\Models\StockInOut::where('product_id', 3)->whereBetween('created_at', [\Carbon\Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d 00:00:00'),\Carbon\Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d 23:59:59'),])->latest()->first()->quantity}}--}}
-                                </td>
-                                <td>
-                                    0.00
-{{--                                    {{number_format(\App\Models\StockInOut::where('product_id',3)->where('type','Credit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}--}}
-                                </td>
-                                <td>
-                                    0.00
-{{--                                    {{number_format(\App\Models\StockInOut::where('product_id',3)->where('type','Debit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity'),2)}}--}}
-                                </td>
-                                <td>
-                                    0.00
-{{--                                    {{\App\Models\Product::find(3)->quantity}}--}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td class="text-left">LT Sturcture</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td class="text-left">HT Conductor</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td class="text-left">LT Conductor</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td class="text-left">Meters</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td class="text-left">Panels</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td class="text-left">Cabels</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <td>9</td>
-                                <td class="text-left">Enamalled Wire</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td class="text-left">Transformer Oil</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
 
-                            <tr>
-                                <td>11</td>
-                                <td class="text-left">Other Items</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
+                            <tbody>
+                            @foreach($data as $key => $value)
+                                <tr>
+                                    <td class="text-center">{{$key}}</td>
+                                    <td class="text-left">
+                                        <a href="{{route('product.index',['filter[id]' => $key])}}">
+                                            {{\App\Models\Product::find($key)->name}}
+                                        </a>
+                                    </td>
+                                    <td class="text-center">{{number_format($value['opening_balance'],2)}}</td>
+                                    <td class="text-center">
+                                        <a href="{{route('transactionHistory.index',['filter[type]' => 'Credit','filter[product_id]' => $key ])}}">
+                                            {{number_format($value['received_during_month'],2)}}
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{route('transactionHistory.index',['filter[type]' => 'Debit','filter[product_id]' => $key ])}}">
+                                            {{number_format($value['issue_during_month'],2)}}
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{route('product.index',['filter[id]' => $key])}}">
+                                            {{number_format($value['present_item'],2)}}
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+
                             </tbody>
                         </table>
                     </div>
-                </div>
 
 
             </div>

@@ -20,6 +20,8 @@ class SchemeController extends Controller
      */
     public function index()
     {
+
+
         $scheme = QueryBuilder::for(Scheme::class)
             ->allowedFilters([AllowedFilter::exact('id'), 'name'])
             ->orderByDesc('id')->get();

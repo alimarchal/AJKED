@@ -69,10 +69,11 @@
             <i class="fas fa-fw fa-clipboard-list"></i>
             <span>Reports</span>
         </a>
-        <div id="collapseReport-99" class="collapse  @if(request()->routeIs(['transactionHistory.*','report.stockReturn'])) show @endif" aria-labelledby="headingReport" data-parent="#accordionSidebar">
+        <div id="collapseReport-99" class="collapse  @if(request()->routeIs(['transactionHistory.*','report.stockReturn','itemWithDescription'])) show @endif" aria-labelledby="headingReport" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item @if(request()->routeIs('transactionHistory.index')) active @endif" href="{{route('transactionHistory.index')}}">Transaction History</a>
                 <a class="collapse-item @if(request()->routeIs('report.stockReturn')) active @endif" href="{{route('report.stockReturn')}}">Stock Return</a>
+                <a class="collapse-item @if(request()->routeIs('itemWithDescription')) active @endif" href="{{route('itemWithDescription')}}">Item List</a>
             </div>
         </div>
 

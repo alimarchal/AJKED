@@ -25,7 +25,7 @@
                 <label for="scheme_id">Scheme Name</label>
                 <select class="form-control select2" id="scheme_id" name="scheme_id" required>
                     <option value="">None</option>
-                    @foreach(\App\Models\Scheme::all() as $scheme)
+                    @foreach(\App\Models\Scheme::where('status',1)->get() as $scheme)
                         <option value="{{$scheme->id}}">{{$scheme->name_of_scheme}} - {{$scheme->approval_number}}</option>
                     @endforeach
                 </select>

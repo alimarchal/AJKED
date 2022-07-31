@@ -18,17 +18,9 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
 
-//        DB::enableQueryLog();
-//        $query = \App\Models\StockInOut::where('product_id', 2)->whereBetween('created_at', [\Carbon\Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d 00:00:00'),\Carbon\Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d 23:59:59'),])->latest()->first();
-//        $query = \App\Models\StockInOut::where('product_id',2)->where('type','Credit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get();
-//        dd($query);
-//        dd(DB::getQueryLog());
-
-
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/itemWithDescription', [\App\Http\Controllers\DashboardController::class, 'itemWithDescription'])->name('itemWithDescription');
     Route::resource('/supplier', \App\Http\Controllers\SupplierController::class);
     Route::resource('/division', \App\Http\Controllers\DivisionController::class);
     Route::resource('/purchaseOrder', \App\Http\Controllers\PurchaseOrderController::class);
