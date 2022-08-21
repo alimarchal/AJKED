@@ -15,7 +15,7 @@
         Create Purchase Order
     </h4>
 
-    <form method="post" action="{{route('purchaseOrder.store')}}" onsubmit="return confirm('Do you really want to submit the form?');" enctype="multipart/form-data">
+    <form method="post" id="myForm" action="{{route('purchaseOrder.store')}}" onsubmit="return confirm('Do you really want to submit the form?');" enctype="multipart/form-data">
         @csrf
         <div class="form-row">
 {{--            <div class="form-group col-md-4">--}}
@@ -80,7 +80,8 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+
+        <input type="submit" id="submit"  class="btn btn-primary" value="Submit">
     </form>
 
     <div class="newqual" style="display: none">
@@ -109,6 +110,19 @@
 
     @section('customFooterScripts')
         <script>
+            // $(document).ready(function () {
+            //     $("#btnSubmit").on('click', function (event) {
+            //         event.preventDefault();
+            //         var el = $(this);
+            //         el.prop('disabled', true);
+            //         setTimeout(function(){el.prop('disabled', false); }, 3000);
+            //     });
+            // });
+
+            $('#myForm').on('submit', function () {
+                $('#submit').attr('disabled', 'disabled');
+            });
+
             $(document).ready(function () {
                 var traing_count = 0;
                 // $('.select2').select2();

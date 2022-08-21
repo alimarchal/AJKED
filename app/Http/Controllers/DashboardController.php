@@ -26,7 +26,7 @@ class DashboardController extends Controller
             $issue_during_month = StockInOut::where('product_id',$item->id)->where('type','Debit')->whereBetween('created_at',[\Carbon\Carbon::now()->startOfMonth()->format('Y-m-d'),\Carbon\Carbon::now()->endOfMonth()->format('Y-m-d')])->get()->sum('quantity');
             if (!empty($opening_balance))
             {
-                $data[$item->id]['opening_balance'] = $opening_balance->quantity;
+                $data[$item->id]['opening_balance'] = $opening_balance->balance;
             }
 
             $data[$item->id]['received_during_month'] = $received_during_month;

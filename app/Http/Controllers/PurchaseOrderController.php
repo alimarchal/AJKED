@@ -51,7 +51,6 @@ class PurchaseOrderController extends Controller
     public function store(StorePurchaseOrderRequest $request)
     {
 
-
         $poi = array_combine($request->store_item, $request->quantity);;
 
         if ($request->has('attachment_path_1')) {

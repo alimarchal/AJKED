@@ -112,7 +112,11 @@
 
 <!-- Page level custom scripts -->
 
-
+<script>
+    $('form').submit(function(){
+        $(this).find(':submit').attr('disabled','disabled');
+    });
+</script>
 @yield('customFooterScripts')
 
 </body>

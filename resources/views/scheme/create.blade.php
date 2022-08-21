@@ -15,7 +15,7 @@
         Create Scheme
     </h4>
 
-    <form method="post" action="{{route('scheme.store')}}" onsubmit="return confirm('Do you really want to submit the form?');">
+    <form method="post" id="myForm" action="{{route('scheme.store')}}" onsubmit="return confirm('Do you really want to submit the form?');">
         @csrf
         <div class="form-row">
 {{--            <div class="form-group col-md-4">--}}
@@ -108,7 +108,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="submit" id="submit" class="btn btn-primary" value="Submit">
     </form>
 
     <div class="newqual" style="display: none">
@@ -137,8 +137,13 @@
 
     @section('customFooterScripts')
         <script>
+
+            $('#myForm').on('submit', function () {
+                $('#submit').attr('disabled', 'disabled');
+            });
+
             $(document).ready(function () {
-                var traing_count = 0;
+                var traing_count = 1;
                 $('.select2').select2();
 
 
@@ -153,7 +158,7 @@
                     // $('.myrow').append(training_html);
                     //
                     // $('.myrow').append($('.newqual').html());
-                    $("form .select2").select2();
+                    // $("form .select2").select2();
 
                 });
                 $("body").delegate(".cross a", "click", function () {

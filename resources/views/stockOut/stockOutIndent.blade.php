@@ -128,6 +128,8 @@
 
     @section('customFooterScripts')
         <script>
+
+
             $(document).ready(function () {
                 var traing_count = 1;
                 // $('.select2').select2();
