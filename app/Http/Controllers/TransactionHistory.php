@@ -30,7 +30,8 @@ class TransactionHistory extends Controller
             ->allowedFilters([
                 AllowedFilter::exact('product_id'),
                 AllowedFilter::exact('type'),
-                AllowedFilter::exact('chalan_type')
+                AllowedFilter::exact('chalan_type'),
+                AllowedFilter::exact('general_date')
             ])
             ->orderBy('general_date', 'DESC')->paginate($print_per_page);
         return view('transactionHistory.index', compact('transaction'));

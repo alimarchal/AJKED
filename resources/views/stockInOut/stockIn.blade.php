@@ -39,20 +39,20 @@
 
             <div class="form-group col-md-3">
                 <label for="delivery_chalan_number">Delivery Chalan Number</label>
-                <input type="text" name="delivery_chalan_number" onkeydown="return false" class="form-control" id="delivery_chalan_number" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                <input type="text" name="delivery_chalan_number"  class="form-control"  max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
             </div>
 
 
             <div class="form-group col-md-3">
                 <label for="delivery_chalan_date">Delivery Chalan Date</label>
-                <input type="date" name="delivery_chalan_date" onkeydown="return false" class="form-control" id="delivery_chalan_date" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                <input type="date" name="delivery_chalan_date"  class="form-control"  max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
             </div>
 
 
 
             <div class="form-group col-md-3">
                 <label for="inspection_certification_number">Inspection Certification Number</label>
-                <input type="text" name="inspection_certification_number" onkeydown="return false" class="form-control" id="inspection_certification_number" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                <input type="text" name="inspection_certification_number"  class="form-control"  max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
             </div>
 
 
@@ -66,25 +66,25 @@
 
             <div class="form-group col-md-3">
                 <label for="receiving_person_name">Receiving Person</label>
-                <input type="text" name="receiving_person_name" onkeydown="return false" class="form-control" id="receiving_person_name" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                <input type="text" name="receiving_person_name" class="form-control" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
             </div>
 
 
             <div class="form-group col-md-3">
                 <label for="receiving_person_designation">Designation</label>
-                <input type="text" name="receiving_person_designation" onkeydown="return false" class="form-control" id="receiving_person_designation" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                <input type="text" name="receiving_person_designation"  class="form-control"  max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
             </div>
 
 
             <div class="form-group col-md-3">
                 <label for="from_supplier_person">From (Supplier Person)</label>
-                <input type="text" name="from_supplier_person" onkeydown="return false" class="form-control" id="from_supplier_person" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                <input type="text" name="from_supplier_person" class="form-control"  max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
             </div>
 
 
             <div class="form-group col-md-3">
                 <label for="from_supplier_designation">Designation (Supplier Person)</label>
-                <input type="text" name="from_supplier_designation" onkeydown="return false" class="form-control" id="from_supplier_designation" max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                <input type="text" name="from_supplier_designation"  class="form-control"  max="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
             </div>
 
 

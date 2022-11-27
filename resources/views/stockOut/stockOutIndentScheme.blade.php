@@ -57,12 +57,12 @@
 
             <div class="form-group col-md-3">
                 <label for="approved_by_name">Approved By Name</label>
-                <input type="text" name="approved_by_name" onkeydown="return false" class="form-control" id="approved_by_name">
+                <input type="text" name="approved_by_name" class="form-control" >
             </div>
 
             <div class="form-group col-md-3">
                 <label for="approved_by_designation">Approved By Designation</label>
-                <input type="text" name="approved_by_designation" onkeydown="return false" class="form-control" id="approved_by_designation">
+                <input type="text" name="approved_by_designation" class="form-control" >
             </div>
 
             <div class="form-group col-md-3">

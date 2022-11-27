@@ -102,7 +102,13 @@
                                     <option value="250">250</option>
                                 </select>
                             </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="general_date">Date</label>
+                                <input type="date" max="{{date('Y-m-d')}}" class="form-control" id="general_date" name="filter[general_date]">
+                            </div>
                         </div>
+
 
 
                         <div class="form-row">
